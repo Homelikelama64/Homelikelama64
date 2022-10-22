@@ -139,7 +139,7 @@ function draw() {
                     break;
                 } else {
                     ship.damaged = true;
-                    repair = new RepairKit(repairImage, p5.Vector.random2D().setMag(1000));
+                    repair = new RepairKit(repairImage, p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position));
                 }
                 missiles.splice(i, 1);
                 continue;

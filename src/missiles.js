@@ -11,14 +11,14 @@ class Missile {
         this.image = image;
         this.position = position;
         this.rotation = rotation;
-        this.size = size
+        this.size = size;
         this.speed = speed;
         this.turningSpeed = turningSpeed;
         this.accuracy = accuracy;
     }
     isColliding(object) {
         console.assert(object instanceof Missile, "Unknown object type");
-        return this.position.dist(object.position) < 15;
+        return this.position.dist(object.position) < (this.size / 2 + object.size / 2);
     }
     update(ts, player_position) {
         let moveDirection = createVector(0, -1).rotate(this.rotation);

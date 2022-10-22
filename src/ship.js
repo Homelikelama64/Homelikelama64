@@ -27,7 +27,7 @@ class Ship {
 
     isColliding(object) {
         if (object instanceof Missile) {
-            return this.position.dist(object.position) < 40;
+            return this.position.dist(object.position) < (object.size / 2 + 50 / 2);
         } else if (object instanceof RepairKit) {
             return this.position.dist(object.position) < 40;
         } else {
