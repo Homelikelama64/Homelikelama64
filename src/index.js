@@ -6,6 +6,7 @@ let shipDamagedImage;
 let shipBoostDamageImage;
 
 let missileV1Image;
+let missileV2Image;
 /** @type {Missile[]} */
 let missiles = [];
 
@@ -23,6 +24,7 @@ function preload() {
     warningImage = loadImage("images/icons/enemywarning.png");
     repairImage = loadImage("images/icons/repair.png");
     missileV1Image = loadImage("images/missiles/missilev1.png");
+    missileV2Image = loadImage("images/missiles/missilev2.png");
     stars = loadImage("images/icons/stars.png");
 }
 
@@ -60,8 +62,10 @@ function setupShip() {
         shipDamagedImage,
         shipBoostDamageImage
     );
-    for (let i = 0; i < 5; i++)
+    for (let i = 0; i < 5; i++) {
         missiles.push(spawnMissileV1(p5.Vector.random2D().setMag(1000), random(360)));
+        missiles.push(spawnMissileV2(p5.Vector.random2D().setMag(1000), random(360)));
+    }
 }
 
 function spawnMissileV1(position, rotation) {
@@ -69,9 +73,21 @@ function spawnMissileV1(position, rotation) {
         missileV1Image,
         position,
         rotation,
+        20,
         400,
         100,
         30
+    );
+}
+function spawnMissileV2(position, rotation) {
+    return new Missile(
+        missileV2Image,
+        position,
+        rotation,
+        45,
+        800,
+        40,
+        5
     );
 }
 

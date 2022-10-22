@@ -3,6 +3,7 @@ class Missile {
         image,
         position,
         rotation,
+        size,
         speed,
         turningSpeed,
         accuracy
@@ -10,6 +11,7 @@ class Missile {
         this.image = image;
         this.position = position;
         this.rotation = rotation;
+        this.size = size
         this.speed = speed;
         this.turningSpeed = turningSpeed;
         this.accuracy = accuracy;
@@ -39,7 +41,7 @@ class Missile {
         imageMode(CENTER);
         translate(this.position);
         rotate(this.rotation);
-        image(this.image, 0, 0, 20, 20);
+        image(this.image, 0, 0, this.size, this.size);
         pop();
     }
 }
