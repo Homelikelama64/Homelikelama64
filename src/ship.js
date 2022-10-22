@@ -28,6 +28,8 @@ class Ship {
     isColliding(object) {
         if (object instanceof Missile) {
             return this.position.dist(object.position) < 40;
+        } else if (object instanceof RepairKit) {
+            return this.position.dist(object.position) < 40;
         } else {
             console.error("Unknown object type");
             return false;

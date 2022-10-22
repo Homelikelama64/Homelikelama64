@@ -9,6 +9,9 @@ let missileV1Image;
 /** @type {Missile[]} */
 let missiles = [];
 
+let repairImage;
+/** @type {RepairKit | null} */
+let repair = null;
 let warningImage;
 let stars;
 
@@ -18,6 +21,7 @@ function preload() {
     shipDamagedImage = loadImage("images/ships/damaged/spaceshipdamaged.png");
     shipBoostDamageImage = loadImage("images/ships/damaged/spaceshipdamagedboost.png");
     warningImage = loadImage("images/icons/enemywarning.png");
+    repairImage = loadImage("images/icons/repair.png");
     missileV1Image = loadImage("images/missiles/missilev1.png");
     stars = loadImage("images/icons/stars.png");
 }
@@ -56,7 +60,7 @@ function setupShip() {
         shipDamagedImage,
         shipBoostDamageImage
     );
-    for (let i = 0; i < 10; i++)
+    for (let i = 0; i < 5; i++)
         missiles.push(spawnMissileV1(p5.Vector.random2D().setMag(1000), random(360)));
 }
 
@@ -78,12 +82,12 @@ function windowResized() {
 function tryDrawOffScreenMarker(markerImage, position) {
     let shipToMissile = position.copy().sub(ship.position);
     let clamped = shipToMissile.copy();
-    clamped.x = clamp(clamped.x, -width / 2 + 5, width / 2 - 5);
-    clamped.y = clamp(clamped.y, -height / 2 + 5, height / 2 - 5);
+    clamped.x = clamp(clamped.x, -width / 2 + 10, width / 2 - 10);
+    clamped.y = clamp(clamped.y, -height / 2 + 10, height / 2 - 10);
 
     if (!shipToMissile.equals(clamped)) {
         imageMode(CENTER);
-        image(markerImage, clamped.x, clamped.y, 10, 10);
+        image(markerImage, clamped.x, clamped.y, 20, 20);
     }
 }
 function draw() {
@@ -119,11 +123,19 @@ function draw() {
                     break;
                 } else {
                     ship.damaged = true;
+                    repair = new RepairKit(repairImage, p5.Vector.random2D().setMag(1000));
                 }
                 missiles.splice(i, 1);
                 continue;
             }
             i++;
+        }
+
+        if (repair !== null) {
+            if (ship.isColliding(repair)) {
+                ship.damaged = false;
+                repair = null;
+            }
         }
 
         starbackground();
@@ -136,11 +148,18 @@ function draw() {
             for (let missile of missiles) {
                 missile.draw();
             }
+
+            if (repair !== null) {
+                repair.draw();
+            }
         }
         pop();
 
         for (let missile of missiles) {
             tryDrawOffScreenMarker(warningImage, missile.position);
         }
+
+        if (repair !== null)
+            tryDrawOffScreenMarker(repairImage, repair.position);
     }
 }
