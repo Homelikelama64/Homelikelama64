@@ -1,32 +1,11 @@
 /** @type {Ship} */
 let ship;
-let shipImage;
-let shipBoostImage;
-let shipDamagedImage;
-let shipBoostDamageImage;
 
-let missileV1Image;
-let missileV2Image;
 /** @type {Missile[]} */
 let missiles = [];
 
-let repairImage;
 /** @type {RepairKit | null} */
 let repair = null;
-let warningImage;
-let stars;
-
-function preload() {
-    shipImage = loadImage("images/ships/spaceship.png");
-    shipBoostImage = loadImage("images/ships/spaceshipBOOST.png");
-    shipDamagedImage = loadImage("images/ships/damaged/spaceshipdamaged.png");
-    shipBoostDamageImage = loadImage("images/ships/damaged/spaceshipdamagedboost.png");
-    warningImage = loadImage("images/icons/enemywarning.png");
-    repairImage = loadImage("images/icons/repair.png");
-    missileV1Image = loadImage("images/missiles/missilev1.png");
-    missileV2Image = loadImage("images/missiles/missilev2.png");
-    stars = loadImage("images/icons/stars.png");
-}
 
 let inMainMenu = true;
 
@@ -76,7 +55,8 @@ function spawnMissileV1(position, rotation) {
         20,
         400,
         100,
-        30
+        30,
+        false
     );
 }
 function spawnMissileV2(position, rotation) {
@@ -87,7 +67,8 @@ function spawnMissileV2(position, rotation) {
         45,
         800,
         40,
-        5
+        0,
+        true
     );
 }
 
@@ -111,48 +92,8 @@ function draw() {
     if (inMainMenu) {
 
     } else {
-        ship.update(ts);
-        for (let missile of missiles) {
-            missile.update(ts, ship.position);
-        }
-
-        for (let i = 0; i < missiles.length;) {
-            let wasCollision = false;
-            for (let j = i + 1; j < missiles.length;) {
-                if (missiles[i].isColliding(missiles[j])) {
-                    let a = missiles[i];
-                    let b = missiles[j];
-                    missiles.splice(missiles.indexOf(a), 1);
-                    missiles.splice(missiles.indexOf(b), 1);
-                    wasCollision = true;
-                    break;
-                }
-                j++;
-            }
-            if (wasCollision) {
-                continue;
-            }
-            if (ship.isColliding(missiles[i])) {
-                if (ship.damaged) {
-                    // TODO: game over
-                    noLoop();
-                    break;
-                } else {
-                    ship.damaged = true;
-                    repair = new RepairKit(repairImage, p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position));
-                }
-                missiles.splice(i, 1);
-                continue;
-            }
-            i++;
-        }
-
-        if (repair !== null) {
-            if (ship.isColliding(repair)) {
-                ship.damaged = false;
-                repair = null;
-            }
-        }
+        if (isLooping)
+            update(ts);
 
         starbackground();
 
@@ -177,5 +118,55 @@ function draw() {
 
         if (repair !== null)
             tryDrawOffScreenMarker(repairImage, repair.position);
+    }
+}
+
+function update(ts) {
+    ship.update(ts);
+    for (let missile of missiles) {
+        missile.update(ts, ship);
+    }
+
+    for (let i = 0; i < missiles.length;) {
+        let wasCollision = false;
+        for (let j = i + 1; j < missiles.length;) {
+            if (missiles[i].isColliding(missiles[j])) {
+                let a = missiles[i];
+                let b = missiles[j];
+                missiles.splice(missiles.indexOf(a), 1);
+                missiles.splice(missiles.indexOf(b), 1);
+                wasCollision = true;
+                break;
+            }
+            j++;
+        }
+        if (wasCollision) {
+            continue;
+        }
+        if (ship.isColliding(missiles[i])) {
+            if (ship.damaged) {
+                // TODO: game over
+                noLoop();
+                break;
+            } else {
+                ship.damaged = true;
+                repair = new RepairKit(
+                    repairImage,
+                    p5.Vector.random2D()
+                        .setMag(random(2500, 5000))
+                        .add(ship.position)
+                );
+            }
+            missiles.splice(i, 1);
+            continue;
+        }
+        i++;
+    }
+
+    if (repair !== null) {
+        if (ship.isColliding(repair)) {
+            ship.damaged = false;
+            repair = null;
+        }
     }
 }
