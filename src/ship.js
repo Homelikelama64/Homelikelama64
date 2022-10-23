@@ -32,7 +32,7 @@ class Ship {
             return this.position.dist(object.position) < (object.size / 2 + 50 / 2);
         } else if (object instanceof RepairKit) {
             return this.position.dist(object.position) < 40;
-        } else if (object instanceof Money){
+        } else if (object instanceof Money) {
             return this.position.dist(object.position) < 40;
         } else {
             console.error("Unknown object type");
@@ -41,10 +41,10 @@ class Ship {
     }
 
     update(ts, bullets) {
-        if (keyIsDown(65)) { // a
+        if (turningLeft) {
             this.rotation -= this.turningSpeed * ts;
         }
-        if (keyIsDown(68)) { // d
+        if (turningRight) {
             this.rotation += this.turningSpeed * ts;
         }
         let forward = createVector(0, -1).rotate(this.rotation);

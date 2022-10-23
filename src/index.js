@@ -18,6 +18,9 @@ let inMainMenu = true;
 
 let time = 0;
 
+let turningLeft = false;
+let turningRight = false;
+
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
@@ -31,9 +34,9 @@ function setup() {
 
     // drawMainMenu();
     canvas.mousePressed(function () {
+        let screenX = map(mouseX, 0, width, -width / 2, width / 2);
+        let screenY = map(mouseY, 0, height, -height / 2, height / 2);
         if (inMainMenu) {
-            let screenX = map(mouseX, 0, width, -width / 2, width / 2);
-            let screenY = map(mouseY, 0, height, -height / 2, height / 2);
             if (screenX >= -100 && screenX <= 100 && screenY >= -50 && screenY <= 50) {
                 time = 0;
                 resetWaves();
@@ -221,10 +224,24 @@ function draw() {
 }
 
 function update(ts) {
+    turningLeft = keyIsDown(65);
+    turningRight = keyIsDown(68);
+
+    if (mouseIsPressed) {
+        let screenX = map(mouseX, 0, width, -width / 2, width / 2);
+        if (screenX < 0) {
+            turningLeft = true;
+            turningRight = false;
+        } else if (screenX > 0) {
+            turningLeft = false;
+            turningRight = true;
+        }
+    }
+
     waves(ts);
     for (money of moneys) {
         if (money.position.dist(ship.position) >= 3000) {
-            money.position = p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position)
+            money.position = p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position);
         }
     }
     ship.update(ts, bullets);
