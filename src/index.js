@@ -314,6 +314,7 @@ function update(ts) {
             wealth += 1;
             spawnMoney();
             moneys.splice(i, 1);
+            kaching.play();
             continue;
         }
         i++;

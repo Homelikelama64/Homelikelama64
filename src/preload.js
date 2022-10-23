@@ -18,7 +18,11 @@ let mainMenuBackground;
 
 let inconsolatafont;
 
+let kaching;
+
 function preload() {
+    soundFormats('mp3', 'ogg');
+
     shipImage = loadImage("images/ships/spaceship.png");
     shipBoostImage = loadImage("images/ships/spaceshipBOOST.png");
     shipDamagedImage = loadImage("images/ships/damaged/spaceshipdamaged.png");
@@ -39,4 +43,6 @@ function preload() {
     mainMenuBackground = loadImage("images/icons/mainmenubackground.jpg");
 
     inconsolatafont = loadFont("fonts/Inconsolata.otf");
+
+    kaching = loadSound("sounds/Kaching.mp3")
 }
