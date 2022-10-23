@@ -4,6 +4,9 @@ let ship;
 /** @type {Missile[]} */
 let missiles = [];
 
+/** @type {Bullet[]} */
+let bullets = [];
+
 /** @type {RepairKit | null} */
 let repair = null;
 
@@ -55,7 +58,7 @@ function spawnMissileV1(position, rotation) {
         20,
         400,
         100,
-        30,
+        15,
         false
     );
 }
@@ -105,6 +108,9 @@ function draw() {
             for (let missile of missiles) {
                 missile.draw();
             }
+            for (let bullet of bullets) {
+                bullet.draw();
+            }
 
             if (repair !== null) {
                 repair.draw();
@@ -122,14 +128,22 @@ function draw() {
 }
 
 function update(ts) {
-    ship.update(ts);
+    ship.update(ts, bullets);
     for (let missile of missiles) {
         missile.update(ts, ship);
+    }
+    for (let i = 0; i < bullets.length;) {
+        bullets[i].update(ts);
+        if (bullets[i].despawnTimer <= 0) {
+            bullets.splice(i, 1);
+            continue;
+        }
+        i++;
     }
 
     for (let i = 0; i < missiles.length;) {
         let wasCollision = false;
-        for (let j = i + 1; j < missiles.length;) {
+        for (let j = i + 1; j < missiles.length; j++) {
             if (missiles[i].isColliding(missiles[j])) {
                 let a = missiles[i];
                 let b = missiles[j];
@@ -138,7 +152,17 @@ function update(ts) {
                 wasCollision = true;
                 break;
             }
-            j++;
+        }
+        if (wasCollision) {
+            continue;
+        }
+        for (let j = 0; j < bullets.length; j++) {
+            if (missiles[i].isColliding(bullets[j])) {
+                missiles.splice(i, 1);
+                bullets.splice(j, 1);
+                wasCollision = true;
+                break;
+            }
         }
         if (wasCollision) {
             continue;

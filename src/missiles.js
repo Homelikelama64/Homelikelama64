@@ -19,8 +19,14 @@ class Missile {
         this.predictive = predictive;
     }
     isColliding(object) {
-        console.assert(object instanceof Missile, "Unknown object type");
-        return this.position.dist(object.position) < (this.size / 2 + object.size / 2);
+        if (object instanceof Missile) {
+            return this.position.dist(object.position) < (this.size / 2 + object.size / 2);
+        } else if (object instanceof Bullet) {
+            return this.position.dist(object.position) < (this.size / 2 + 10 / 2);
+        } else {
+            console.error("Unknown object type");
+            return false;
+        }
     }
     update(ts, player) {
         console.assert(player instanceof Ship, "player must be a Ship");

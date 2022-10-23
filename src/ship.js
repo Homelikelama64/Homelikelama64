@@ -23,6 +23,8 @@ class Ship {
         this.boostImage = boostImage;
         this.damagedImage = damagedImage;
         this.boostDamageImage = boostDamageImage;
+        this.fireDelay = 0.2;
+        this.fireTimer = this.fireDelay;
     }
 
     isColliding(object) {
@@ -36,14 +38,35 @@ class Ship {
         }
     }
 
-    update(ts) {
+    update(ts, bullets) {
         if (keyIsDown(65)) { // a
             this.rotation -= this.turningSpeed * ts;
         }
         if (keyIsDown(68)) { // d
             this.rotation += this.turningSpeed * ts;
         }
-        this.position.add(createVector(0, -this.speed).rotate(this.rotation).mult(ts));
+        let forward = createVector(0, -1).rotate(this.rotation);
+        let movement = forward.copy().mult(this.speed);
+        this.position.add(movement.copy().mult(ts));
+
+        this.fireTimer -= ts;
+        while (this.fireTimer <= 0) {
+            this.fireTimer += this.fireDelay;
+            bullets.push(new Bullet(
+                bulletImage,
+                this.position.copy().add(forward.copy().mult(14).rotate(-45)),
+                this.rotation,
+                300,
+                movement
+            ));
+            bullets.push(new Bullet(
+                bulletImage,
+                this.position.copy().add(forward.copy().mult(14).rotate(45)),
+                this.rotation,
+                300,
+                movement
+            ));
+        }
     }
 
     draw() {
