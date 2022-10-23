@@ -45,7 +45,7 @@ function setupUnits() {
         300,
         120,
         createVector(0, 0),
-        0,
+        random(0, 360),
         4,
         100,
         false,
