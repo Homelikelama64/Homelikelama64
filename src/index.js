@@ -12,6 +12,8 @@ let repair = null;
 
 let inMainMenu = true;
 
+let time = 0;
+
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
@@ -22,6 +24,7 @@ function setup() {
             let screenX = map(mouseX, 0, width, -width / 2, width / 2);
             let screenY = map(mouseY, 0, height, -height / 2, height / 2);
             if (screenX >= -100 && screenX <= 100 && screenY >= -50 && screenY <= 50) {
+                time = 0;
                 setupUnits();
                 inMainMenu = false;
             }
@@ -113,13 +116,34 @@ function draw() {
         textFont(inconsolatafont);
         text("PLAY", 0, 30);
         pop();
+
+        push();
+        textFont(inconsolatafont);
+        textAlign(CENTER);
+        textSize(50);
+        text(`You surrvived
+${time.toFixed(3)}s`, 0, -height / 2 + 50);
+        pop();
     } else {
         if (isLooping)
             update(ts);
 
+        time += ts;
+
         starbackground();
 
         push();
+        textFont(inconsolatafont);
+        textAlign(CENTER);
+        textSize(50);
+        text(`${time.toFixed(3)}s`, 0, -height / 2 + 50);
+        pop();
+
+        if (keyIsDown(27)) {
+            inMainMenu = true
+        }
+
+            push();
         {
             translate(ship.position.copy().mult(-1));
 

@@ -11,7 +11,7 @@ class Bullet {
         this.rotation = rotation;
         this.speed = speed;
         this.drift = drift;
-        this.maxDespawnTimer = 3;
+        this.maxDespawnTimer = 2;
         this.despawnTimer = this.maxDespawnTimer;
     }
 
