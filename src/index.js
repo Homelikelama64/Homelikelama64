@@ -117,13 +117,15 @@ function draw() {
         text("PLAY", 0, 30);
         pop();
 
-        push();
-        textFont(inconsolatafont);
-        textAlign(CENTER);
-        textSize(50);
-        text(`You surrvived
+        if (time > 0) {
+            push();
+            textFont(inconsolatafont);
+            textAlign(CENTER);
+            textSize(50);
+            text(`You surrvived
 ${time.toFixed(3)}s`, 0, -height / 2 + 50);
-        pop();
+            pop();
+        }
     } else {
         if (isLooping)
             update(ts);
@@ -140,10 +142,10 @@ ${time.toFixed(3)}s`, 0, -height / 2 + 50);
         pop();
 
         if (keyIsDown(27)) {
-            inMainMenu = true
+            inMainMenu = true;
         }
 
-            push();
+        push();
         {
             translate(ship.position.copy().mult(-1));
 
