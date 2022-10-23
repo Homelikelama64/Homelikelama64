@@ -25,6 +25,7 @@ function setup() {
             let screenY = map(mouseY, 0, height, -height / 2, height / 2);
             if (screenX >= -100 && screenX <= 100 && screenY >= -50 && screenY <= 50) {
                 time = 0;
+                resetWaves();
                 setupUnits();
                 inMainMenu = false;
             }
@@ -53,35 +54,31 @@ function setupUnits() {
         shipDamagedImage,
         shipBoostDamageImage
     );
-    for (let i = 0; i < 5; i++) {
-        missiles.push(spawnMissileV1(p5.Vector.random2D().setMag(1000), random(360)));
-        missiles.push(spawnMissileV2(p5.Vector.random2D().setMag(1000), random(360)));
-    }
 }
 
-function spawnMissileV1(position, rotation) {
-    return new Missile(
+function spawnMissileV1() {
+    missiles.push(new Missile(
         missileV1Image,
-        position,
-        rotation,
+        p5.Vector.random2D().setMag(random(1000, 1500)).add(ship.position),
+        random(360),
         20,
         400,
         100,
         15,
         false
-    );
+    ));
 }
 function spawnMissileV2(position, rotation) {
-    return new Missile(
+    missiles.push(new Missile(
         missileV2Image,
-        position,
-        rotation,
+        p5.Vector.random2D().setMag(random(1000, 1500)).add(ship.position),
+        random(360),
         45,
         800,
         40,
         0,
         true
-    );
+    ));
 }
 
 function windowResized() {
@@ -103,6 +100,7 @@ function draw() {
     const ts = deltaTime / 1000;
     if (inMainMenu) {
         push();
+        background(0);
         imageMode(CENTER);
         let scale = mainMenuBackground.height / height;
         image(mainMenuBackground, 0, 0, mainMenuBackground.width / scale, mainMenuBackground.height / scale);
@@ -143,6 +141,7 @@ ${time.toFixed(3)}s`, 0, -height / 2 + 50);
 
         if (keyIsDown(27)) {
             inMainMenu = true;
+            return;
         }
 
         push();
@@ -173,6 +172,7 @@ ${time.toFixed(3)}s`, 0, -height / 2 + 50);
 }
 
 function update(ts) {
+    waves(ts);
     ship.update(ts, bullets);
     for (let missile of missiles) {
         missile.update(ts, ship);
