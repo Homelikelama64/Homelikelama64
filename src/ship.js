@@ -32,6 +32,8 @@ class Ship {
             return this.position.dist(object.position) < (object.size / 2 + 50 / 2);
         } else if (object instanceof RepairKit) {
             return this.position.dist(object.position) < 40;
+        } else if (object instanceof Money){
+            return this.position.dist(object.position) < 40;
         } else {
             console.error("Unknown object type");
             return false;

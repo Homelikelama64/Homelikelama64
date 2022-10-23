@@ -10,6 +10,10 @@ let bullets = [];
 /** @type {RepairKit | null} */
 let repair = null;
 
+/** @type {Money[]} */
+let moneys = [];
+let wealth;
+
 let inMainMenu = true;
 
 let time = 0;
@@ -17,6 +21,14 @@ let time = 0;
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
+
+    let loadedWealth = window.localStorage.getItem("wealth");
+    console.log(loadedWealth);
+    if (loadedWealth !== null && loadedWealth !== undefined) {
+        wealth = parseInt(loadedWealth);
+    } else {
+        wealth = 0;
+    }
 
     // drawMainMenu();
     canvas.mousePressed(function () {
@@ -41,6 +53,7 @@ function setupUnits() {
     missiles = [];
     bullets = [];
     repair = null;
+    moneys = [];
     ship = new Ship(
         300,
         120,
@@ -54,6 +67,9 @@ function setupUnits() {
         shipDamagedImage,
         shipBoostDamageImage
     );
+    spawnMoney();
+    spawnMoney();
+    spawnMoney();
 }
 
 function spawnMissileV1() {
@@ -80,6 +96,13 @@ function spawnMissileV2(position, rotation) {
         true
     ));
 }
+function spawnMoney() {
+    moneys.push(new Money(
+        moneyImage,
+        p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position)
+    ));
+}
+
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
@@ -98,6 +121,7 @@ function tryDrawOffScreenMarker(markerImage, position) {
 }
 function draw() {
     const ts = deltaTime / 1000;
+
     if (inMainMenu) {
 
         push();
@@ -169,20 +193,41 @@ function draw() {
             if (repair !== null) {
                 repair.draw();
             }
+            for (let money of moneys) {
+                money.draw();
+            }
         }
         pop();
 
         for (let missile of missiles) {
             tryDrawOffScreenMarker(warningImage, missile.position);
         }
+        for (let money of moneys) {
+            tryDrawOffScreenMarker(moneyImage, money.position);
+        }
 
         if (repair !== null)
             tryDrawOffScreenMarker(repairImage, repair.position);
     }
+    push();
+    imageMode(CENTER);
+    image(blankMoneyImage, 0, height / 2 - 100, 100, 100);
+    textFont(inconsolatafont);
+    textSize(50);
+    textAlign(CENTER);
+    translate(0, height / 2 - 85);
+    rotate(-7);
+    text(`$${wealth}`, 0, 0);
+    pop();
 }
 
 function update(ts) {
     waves(ts);
+    for (money of moneys) {
+        if (money.position.dist(ship.position) >= 3000) {
+            money.position = p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position)
+        }
+    }
     ship.update(ts, bullets);
     for (let missile of missiles) {
         missile.update(ts, ship);
@@ -247,4 +292,18 @@ function update(ts) {
             repair = null;
         }
     }
+
+    for (let i = 0; i < moneys.length;) {
+        if (ship.isColliding(moneys[i])) {
+            wealth += 1;
+            spawnMoney();
+            moneys.splice(i, 1);
+            continue;
+        }
+        i++;
+    }
 }
+
+window.addEventListener("beforeunload", function () {
+    window.localStorage.setItem("wealth", `${wealth}`);
+});
