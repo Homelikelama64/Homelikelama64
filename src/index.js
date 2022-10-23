@@ -23,7 +23,6 @@ function setup() {
     angleMode(DEGREES);
 
     let loadedWealth = window.localStorage.getItem("wealth");
-    console.log(loadedWealth);
     if (loadedWealth !== null && loadedWealth !== undefined) {
         wealth = parseInt(loadedWealth);
     } else {
