@@ -99,6 +99,7 @@ function tryDrawOffScreenMarker(markerImage, position) {
 function draw() {
     const ts = deltaTime / 1000;
     if (inMainMenu) {
+
         push();
         background(0);
         imageMode(CENTER);
@@ -108,6 +109,7 @@ function draw() {
         rectMode(CORNERS);
         rect(-100, -50, 100, 50);
         pop();
+
         push();
         textAlign(CENTER);
         textSize(100);
@@ -115,12 +117,21 @@ function draw() {
         text("PLAY", 0, 30);
         pop();
 
+        push();
+        textAlign(CENTER);
+        textSize(30);
+        textFont(inconsolatafont);
+        textStyle(BOLD)
+        text("CONTROLS:", width / 2 - 100, 0);
+        text("A and D to turn the ship", width / 2 - 180, 30);
+        pop();
+
         if (time > 0) {
             push();
             textFont(inconsolatafont);
             textAlign(CENTER);
             textSize(50);
-            text(`You surrvived
+            text(`You surrvived!!!
 ${time.toFixed(3)}s`, 0, -height / 2 + 50);
             pop();
         }
