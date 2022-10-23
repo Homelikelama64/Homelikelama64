@@ -121,7 +121,7 @@ function draw() {
         textAlign(CENTER);
         textSize(30);
         textFont(inconsolatafont);
-        textStyle(BOLD)
+        textStyle(BOLD);
         text("CONTROLS:", width / 2 - 100, 0);
         text("A and D to turn the ship", width / 2 - 180, 30);
         pop();
@@ -131,8 +131,7 @@ function draw() {
             textFont(inconsolatafont);
             textAlign(CENTER);
             textSize(50);
-            text(`You surrvived!!!
-${time.toFixed(3)}s`, 0, -height / 2 + 50);
+            text(`You surrvived for ${time.toFixed(3)} seconds!!!`, 0, -height / 2 + 50);
             pop();
         }
     } else {
