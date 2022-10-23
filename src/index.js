@@ -14,23 +14,29 @@ let inMainMenu = true;
 
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
+    angleMode(DEGREES);
+
     // drawMainMenu();
     canvas.mousePressed(function () {
         if (inMainMenu) {
-            inMainMenu = false;
-            loop();
+            let screenX = map(mouseX, 0, width, -width / 2, width / 2);
+            let screenY = map(mouseY, 0, height, -height / 2, height / 2);
+            if (screenX >= -100 && screenX <= 100 && screenY >= -50 && screenY <= 50) {
+                setupUnits();
+                inMainMenu = false;
+            }
         }
     });
-
-    angleMode(DEGREES);
-    setupShip();
 }
 
 function clamp(value, minValue, maxValue) {
     return max(min(value, maxValue), minValue);
 }
 
-function setupShip() {
+function setupUnits() {
+    missiles = [];
+    bullets = [];
+    repair = null;
     ship = new Ship(
         300,
         120,
@@ -93,7 +99,20 @@ function tryDrawOffScreenMarker(markerImage, position) {
 function draw() {
     const ts = deltaTime / 1000;
     if (inMainMenu) {
-
+        push();
+        imageMode(CENTER);
+        let scale = mainMenuBackground.height / height;
+        image(mainMenuBackground, 0, 0, mainMenuBackground.width / scale, mainMenuBackground.height / scale);
+        fill(51);
+        rectMode(CORNERS);
+        rect(-100, -50, 100, 50);
+        pop();
+        push();
+        textAlign(CENTER);
+        textSize(100);
+        textFont(inconsolatafont);
+        text("PLAY", 0, 30);
+        pop();
     } else {
         if (isLooping)
             update(ts);
@@ -169,9 +188,8 @@ function update(ts) {
         }
         if (ship.isColliding(missiles[i])) {
             if (ship.damaged) {
-                // TODO: game over
-                noLoop();
-                break;
+                inMainMenu = true;
+                return;
             } else {
                 ship.damaged = true;
                 repair = new RepairKit(

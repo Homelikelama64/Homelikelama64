@@ -2,7 +2,7 @@ let shipImage;
 let shipBoostImage;
 let shipDamagedImage;
 let shipBoostDamageImage;
-let bulletImage
+let bulletImage;
 
 let missileV1Image;
 let missileV2Image;
@@ -12,6 +12,9 @@ let missileV3DebImage;
 let repairImage;
 let warningImage;
 let stars;
+let mainMenuBackground;
+
+let inconsolatafont;
 
 function preload() {
     shipImage = loadImage("images/ships/spaceship.png");
@@ -26,4 +29,6 @@ function preload() {
     missileV3Image = loadImage("images/missiles/missilev3.png");
     missileV3DebImage = loadImage("images/missiles/missilev3deb.png");
     stars = loadImage("images/icons/stars.png");
+    mainMenuBackground = loadImage("images/icons/mainmenubackground.jpg");
+    inconsolatafont = loadFont("fonts/Inconsolata.otf");
 }
