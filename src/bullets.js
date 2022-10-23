@@ -5,13 +5,14 @@ class Bullet {
         rotation,
         speed,
         drift,
+        maxDespawnTimer
     ) {
         this.image = image;
         this.position = position;
         this.rotation = rotation;
         this.speed = speed;
         this.drift = drift;
-        this.maxDespawnTimer = 2;
+        this.maxDespawnTimer = maxDespawnTimer; 
         this.despawnTimer = this.maxDespawnTimer;
     }
 

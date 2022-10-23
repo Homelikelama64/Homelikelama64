@@ -57,14 +57,16 @@ class Ship {
                 this.position.copy().add(forward.copy().mult(14).rotate(-45)),
                 this.rotation,
                 300,
-                movement
+                movement,
+                2
             ));
             bullets.push(new Bullet(
                 bulletImage,
                 this.position.copy().add(forward.copy().mult(14).rotate(45)),
                 this.rotation,
                 300,
-                movement
+                movement,
+                2
             ));
         }
     }
