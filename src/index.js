@@ -276,6 +276,7 @@ function update(ts) {
             if (missiles[i].isColliding(bullets[j])) {
                 missiles.splice(i, 1);
                 bullets.splice(j, 1);
+                wealth += 1
                 wasCollision = true;
                 break;
             }
