@@ -8,6 +8,7 @@ let missileV1Image;
 let missileV2Image;
 let missileV3Image;
 let missileV3DebImage;
+let missileV3Imagebullet;
 
 let moneyImage;
 let blankMoneyImage;
@@ -38,6 +39,7 @@ function preload() {
     missileV2Image = loadImage("images/missiles/missilev2.png");
     missileV3Image = loadImage("images/missiles/missilev3.png");
     missileV3DebImage = loadImage("images/missiles/missilev3deb.png");
+    missileV3Imagebullet = loadImage("images/missiles/missilev3bullet.png")
 
     stars = loadImage("images/icons/stars.png");
     mainMenuBackground = loadImage("images/icons/mainmenubackground.jpg");

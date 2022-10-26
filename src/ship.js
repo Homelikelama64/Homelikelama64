@@ -34,6 +34,8 @@ class Ship {
             return this.position.dist(object.position) < 40;
         } else if (object instanceof Money) {
             return this.position.dist(object.position) < 40;
+        } else if (object instanceof bullets) {
+            return this.position.dist(object.position) && bullets.enemy < 40;
         } else {
             console.error("Unknown object type");
             return false;
@@ -60,7 +62,8 @@ class Ship {
                 this.rotation,
                 300,
                 movement,
-                2
+                2,
+                false
             ));
             bullets.push(new Bullet(
                 bulletImage,
@@ -68,7 +71,8 @@ class Ship {
                 this.rotation,
                 300,
                 movement,
-                2
+                2,
+                false
             ));
         }
     }

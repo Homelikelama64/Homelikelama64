@@ -72,6 +72,7 @@ function setupUnits() {
     spawnMoney();
     spawnMoney();
     spawnMoney();
+    spawnMissileV3();
 }
 
 function spawnMissileV1() {
@@ -86,7 +87,7 @@ function spawnMissileV1() {
         false
     ));
 }
-function spawnMissileV2(position, rotation) {
+function spawnMissileV2() {
     missiles.push(new Missile(
         missileV2Image,
         p5.Vector.random2D().setMag(random(1000, 1500)).add(ship.position),
@@ -96,6 +97,18 @@ function spawnMissileV2(position, rotation) {
         40,
         0,
         true
+    ));
+}
+function spawnMissileV3() {
+    missiles.push(new Missile(
+        missileV3Image,
+        p5.Vector.random2D().setMag(random(1000, 1500)).add(ship.position),
+        random(360),
+        45,
+        425,
+        95,
+        0,
+        false
     ));
 }
 function spawnMoney() {
@@ -285,6 +298,22 @@ function update(ts) {
             continue;
         }
         if (ship.isColliding(missiles[i])) {
+            if (ship.damaged) {
+                inMainMenu = true;
+                return;
+            } else {
+                ship.damaged = true;
+                repair = new RepairKit(
+                    repairImage,
+                    p5.Vector.random2D()
+                        .setMag(random(2500, 5000))
+                        .add(ship.position)
+                );
+            }
+            missiles.splice(i, 1);
+            continue;
+        }
+        if (ship.isColliding(bullets[i])) {
             if (ship.damaged) {
                 inMainMenu = true;
                 return;

@@ -1,8 +1,10 @@
 let v1Timer = 0;
 let v2Timer = 0;
+let v3Timer = 0
 
 let v1DelayTimer = 6;
 let v2DelayTimer = 23;
+let v3DelayTimer = 60
 
 let moneyspawntime = 0;
 let moneyspawntimedelay = 40;
@@ -12,6 +14,9 @@ function resetWaves() {
     v1DelayTimer = 6;
     v2Timer = 0;
     v2DelayTimer = 23;
+    v3Timer = 0;
+    v3DelayTimer = 60;
+
     moneyspawntime = 0;
     moneyspawntimedelay = 40;
 }
@@ -34,5 +39,11 @@ function waves(ts) {
         v2Timer -= v2DelayTimer;
         spawnMissileV2();
         v2DelayTimer = max(v2DelayTimer - 0.05, 6);
+    }
+    v3Timer += ts;
+    while (v3Timer >= 23) {
+        v3Timer -= v3DelayTimer;
+        spawnMissileV2();
+        v3DelayTimer = max(v3DelayTimer - 3, 45);
     }
 }

@@ -39,6 +39,7 @@ class Missile {
                 targetPos = playerMoveDirection.copy().mult(timeToReachPlayer).add(player.position);
             }
         }
+
         let moveDirection = createVector(0, -1).rotate(this.rotation);
         let angle = targetPos
             .copy()
@@ -48,6 +49,10 @@ class Missile {
             this.rotation -= this.turningSpeed * ts;
         } else if (angle < -this.accuracy) {
             this.rotation += this.turningSpeed * ts;
+        }
+
+        if (this.image === missileV3Image && ship.position.dist(this.position) < 70) {
+            console.log("fire");
         }
         this.position.add(moveDirection.copy().mult(this.speed).mult(ts));
     }

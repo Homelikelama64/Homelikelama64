@@ -5,7 +5,8 @@ class Bullet {
         rotation,
         speed,
         drift,
-        maxDespawnTimer
+        maxDespawnTimer,
+        enemy
     ) {
         this.image = image;
         this.position = position;
@@ -14,6 +15,7 @@ class Bullet {
         this.drift = drift;
         this.maxDespawnTimer = maxDespawnTimer; 
         this.despawnTimer = this.maxDespawnTimer;
+        this.enemy = enemy;
     }
 
     update(ts) {
