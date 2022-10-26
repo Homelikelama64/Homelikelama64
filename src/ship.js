@@ -10,7 +10,7 @@ class Ship {
         image,
         boostImage,
         damagedImage,
-        boostDamageImage,
+        boostDamageImage
     ) {
         this.speed = speed;
         this.turningSpeed = turningSpeed;

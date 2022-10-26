@@ -227,7 +227,7 @@ function update(ts) {
     turningLeft = keyIsDown(65);
     turningRight = keyIsDown(68);
 
-    if (mouseIsPressed) {
+    function touchStarted() {
         let screenX = map(mouseX, 0, width, -width / 2, width / 2);
         if (screenX < 0) {
             turningLeft = true;
@@ -239,6 +239,7 @@ function update(ts) {
     }
 
     waves(ts);
+    touchStarted
     for (money of moneys) {
         if (money.position.dist(ship.position) >= 3000) {
             money.position = p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position);
