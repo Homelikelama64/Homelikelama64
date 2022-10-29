@@ -72,7 +72,6 @@ function setupUnits() {
     spawnMoney();
     spawnMoney();
     spawnMoney();
-    spawnMissileV3();
 }
 
 function spawnMissileV1() {
@@ -105,7 +104,7 @@ function spawnMissileV3() {
         p5.Vector.random2D().setMag(random(1000, 1500)).add(ship.position),
         random(360),
         45,
-        425,
+        420,
         95,
         0,
         false
@@ -257,13 +256,26 @@ function update(ts) {
             money.position = p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position);
         }
     }
-    ship.update(ts, bullets);
-    for (let missile of missiles) {
-        missile.update(ts, ship);
-    }
+    ship.update(ts);
     for (let i = 0; i < bullets.length;) {
         bullets[i].update(ts);
         if (bullets[i].despawnTimer <= 0) {
+            bullets.splice(i, 1);
+            continue;
+        }
+        if (ship.isColliding(bullets[i])) {
+            if (ship.damaged) {
+                inMainMenu = true;
+                return;
+            } else {
+                ship.damaged = true;
+                repair = new RepairKit(
+                    repairImage,
+                    p5.Vector.random2D()
+                        .setMag(random(2500, 5000))
+                        .add(ship.position)
+                );
+            }
             bullets.splice(i, 1);
             continue;
         }
@@ -271,6 +283,10 @@ function update(ts) {
     }
 
     for (let i = 0; i < missiles.length;) {
+        if (!missiles[i].update(ts, ship)) {
+            missiles.splice(i, 1);
+            continue;
+        }
         let wasCollision = false;
         for (let j = i + 1; j < missiles.length; j++) {
             if (missiles[i].isColliding(missiles[j])) {
@@ -289,7 +305,7 @@ function update(ts) {
             if (missiles[i].isColliding(bullets[j])) {
                 missiles.splice(i, 1);
                 bullets.splice(j, 1);
-                wealth += 1
+                wealth += 1;
                 wasCollision = true;
                 break;
             }
@@ -298,22 +314,6 @@ function update(ts) {
             continue;
         }
         if (ship.isColliding(missiles[i])) {
-            if (ship.damaged) {
-                inMainMenu = true;
-                return;
-            } else {
-                ship.damaged = true;
-                repair = new RepairKit(
-                    repairImage,
-                    p5.Vector.random2D()
-                        .setMag(random(2500, 5000))
-                        .add(ship.position)
-                );
-            }
-            missiles.splice(i, 1);
-            continue;
-        }
-        if (ship.isColliding(bullets[i])) {
             if (ship.damaged) {
                 inMainMenu = true;
                 return;

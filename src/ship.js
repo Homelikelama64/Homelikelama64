@@ -35,16 +35,14 @@ class Ship {
         } else if (object instanceof Money) {
             return this.position.dist(object.position) < 40;
         } else if (object instanceof Bullet) {
-            if (this.position.dist(object.position) && bullets.enemy < 40) {
-                return true
-            }
+            return this.position.dist(object.position) < 40 && object.is_enemy;
         } else {
             console.error("Unknown object type");
             return false;
         }
     }
 
-    update(ts, bullets) {
+    update(ts) {
         if (turningLeft) {
             this.rotation -= this.turningSpeed * ts;
         }
@@ -65,7 +63,8 @@ class Ship {
                 300,
                 movement,
                 2,
-                false
+                false,
+                createVector(5, 10)
             ));
             bullets.push(new Bullet(
                 bulletImage,
@@ -74,7 +73,8 @@ class Ship {
                 300,
                 movement,
                 2,
-                true
+                false,
+                createVector(5, 10)
             ));
         }
     }

@@ -41,6 +41,7 @@ class Missile {
         }
 
         let moveDirection = createVector(0, -1).rotate(this.rotation);
+        let movement = moveDirection.copy().mult(this.speed);
         let angle = targetPos
             .copy()
             .sub(this.position)
@@ -51,10 +52,51 @@ class Missile {
             this.rotation += this.turningSpeed * ts;
         }
 
-        if (this.image === missileV3Image && ship.position.dist(this.position) < 70) {
-            console.log("fire");
+        if (this.image === missileV3Image && ship.position.dist(this.position) < 120) {
+            bullets.push(new Bullet(
+                missileV3Imagebullet,
+                this.position.copy().add(moveDirection.copy().mult(25)),
+                this.rotation,
+                100,
+                movement,
+                1.5,
+                true,
+                createVector(15, 15)
+            ));
+            bullets.push(new Bullet(
+                missileV3Imagebullet,
+                this.position.copy().add(moveDirection.copy().mult(25).rotate(20)),
+                this.rotation + 20,
+                100,
+                movement,
+                3,
+                true,
+                createVector(15, 15)
+            ));
+            bullets.push(new Bullet(
+                missileV3Imagebullet,
+                this.position.copy().add(moveDirection.copy().mult(25).rotate(-20)),
+                this.rotation - 20,
+                100,
+                movement,
+                3,
+                true,
+                createVector(15, 15)
+            ));
+            bullets.push(new Bullet(
+                missileV3DebImage,
+                this.position.copy(),
+                this.rotation,
+                100,
+                movement,
+                3,
+                true,
+                createVector(40, 40)
+            ));
+            return false;
         }
         this.position.add(moveDirection.copy().mult(this.speed).mult(ts));
+        return true;
     }
     draw() {
         push();

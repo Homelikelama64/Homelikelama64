@@ -35,15 +35,15 @@ function waves(ts) {
         v1DelayTimer = max(v1DelayTimer - 0.07, 2);
     }
     v2Timer += ts;
-    while (v2Timer >= 23) {
+    while (v2Timer >= v2DelayTimer) {
         v2Timer -= v2DelayTimer;
         spawnMissileV2();
         v2DelayTimer = max(v2DelayTimer - 0.05, 6);
     }
     v3Timer += ts;
-    while (v3Timer >= 23) {
+    while (v3Timer >= v3DelayTimer) {
         v3Timer -= v3DelayTimer;
-        spawnMissileV2();
+        spawnMissileV3();
         v3DelayTimer = max(v3DelayTimer - 3, 45);
     }
 }

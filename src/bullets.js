@@ -6,16 +6,18 @@ class Bullet {
         speed,
         drift,
         maxDespawnTimer,
-        enemy
+        is_enemy,
+        size
     ) {
         this.image = image;
         this.position = position;
         this.rotation = rotation;
         this.speed = speed;
         this.drift = drift;
-        this.maxDespawnTimer = maxDespawnTimer; 
+        this.maxDespawnTimer = maxDespawnTimer;
         this.despawnTimer = this.maxDespawnTimer;
-        this.enemy = enemy;
+        this.is_enemy = is_enemy;
+        this.size = size;
     }
 
     update(ts) {
@@ -36,8 +38,8 @@ class Bullet {
             this.image,
             0,
             0,
-            map(this.despawnTimer, 0, this.maxDespawnTimer, 0, 5),
-            map(this.despawnTimer, 0, this.maxDespawnTimer, 0, 10));
+            map(this.despawnTimer, 0, this.maxDespawnTimer, 0, this.size.x),
+            map(this.despawnTimer, 0, this.maxDespawnTimer, 0, this.size.y));
         pop();
     }
 }
