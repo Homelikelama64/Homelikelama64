@@ -236,6 +236,7 @@ function draw() {
 }
 
 function update(ts) {
+    wealth = wealth || 0
     turningLeft = keyIsDown(65);
     turningRight = keyIsDown(68);
 

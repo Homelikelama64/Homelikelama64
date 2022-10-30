@@ -3,9 +3,9 @@ function starbackground() {
     texture(stars);
     textureWrap(REPEAT);
 
-    let backgroundSize = height;
+    let backgroundSize = height * 1.5;
     if (width > height) {
-        backgroundSize = width;
+        backgroundSize = width * 1.5;
     }
 
     let u = ship.position.x / backgroundSize;
