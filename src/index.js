@@ -273,7 +273,7 @@ function update(ts) {
                 repair = new RepairKit(
                     repairImage,
                     p5.Vector.random2D()
-                        .setMag(random(2500, 5000))
+                        .setMag(random(2500, 3500))
                         .add(ship.position)
                 );
             }
