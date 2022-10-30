@@ -42,7 +42,7 @@ function preload() {
     missileV3Imagebullet = loadImage("images/missiles/missilev3bullet.png")
 
     stars = loadImage("images/icons/stars.png");
-    mainMenuBackground = loadImage("images/icons/mainmenubackground.jpg");
+    mainMenuBackground = loadImage("images/icons/mainmenubackground.png");
 
     inconsolatafont = loadFont("fonts/Inconsolata.otf");
 
