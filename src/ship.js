@@ -35,7 +35,7 @@ class Ship {
         } else if (object instanceof Money) {
             return this.position.dist(object.position) < 40;
         } else if (object instanceof Bullet) {
-            return this.position.dist(object.position) < 40 && object.is_enemy;
+            return this.position.dist(object.position) < 20 && object.is_enemy;
         } else {
             console.error("Unknown object type");
             return false;

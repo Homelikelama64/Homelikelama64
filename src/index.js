@@ -15,6 +15,7 @@ let moneys = [];
 let wealth;
 
 let inMainMenu = true;
+let paused = false;
 
 let time = 0;
 
@@ -107,7 +108,7 @@ function spawnMissileV3() {
         420,
         95,
         0,
-        false
+        true
     ));
 }
 function spawnMoney() {
@@ -176,7 +177,11 @@ function draw() {
         if (isLooping)
             update(ts);
 
-        time += ts;
+        if (!isLooping) {
+            time = time;
+        } else {
+            time += ts;
+        }
 
         starbackground();
 
@@ -187,9 +192,12 @@ function draw() {
         text(`${time.toFixed(3)}s`, 0, -height / 2 + 50);
         pop();
 
-        if (keyIsDown(27)) {
-            inMainMenu = true;
-            return;
+        if (keyIsDown(27) && paused == false) {
+            paused = true;
+            isLooping = false;
+        } else if (!keyIsDown(27) && paused == true) {
+            paused = false;
+            isLooping = true;
         }
 
         push();
@@ -236,7 +244,7 @@ function draw() {
 }
 
 function update(ts) {
-    wealth = wealth || 0
+    wealth = wealth || 0;
     turningLeft = keyIsDown(65);
     turningRight = keyIsDown(68);
 

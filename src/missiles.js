@@ -52,22 +52,22 @@ class Missile {
             this.rotation += this.turningSpeed * ts;
         }
 
-        if (this.image === missileV3Image && ship.position.dist(this.position) < 120) {
+        if (this.image === missileV3Image && ship.position.dist(this.position) < 150) {
             bullets.push(new Bullet(
                 missileV3Imagebullet,
                 this.position.copy().add(moveDirection.copy().mult(25)),
                 this.rotation,
-                100,
+                145,
                 movement,
-                1.5,
+                3,
                 true,
                 createVector(15, 15)
             ));
             bullets.push(new Bullet(
                 missileV3Imagebullet,
                 this.position.copy().add(moveDirection.copy().mult(25).rotate(20)),
-                this.rotation + 20,
-                100,
+                this.rotation + 25,
+                145,
                 movement,
                 3,
                 true,
@@ -76,8 +76,8 @@ class Missile {
             bullets.push(new Bullet(
                 missileV3Imagebullet,
                 this.position.copy().add(moveDirection.copy().mult(25).rotate(-20)),
-                this.rotation - 20,
-                100,
+                this.rotation - 25,
+                145,
                 movement,
                 3,
                 true,
