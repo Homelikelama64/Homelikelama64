@@ -46,8 +46,9 @@ function setup() {
             }
         }
         if (paused == true && !inMainMenu) {
-            if (screenX >= -175 && screenX <= 175 && screenY >= -240 && screenY <= -140) {
+            if (screenX >= -175 && screenX <= 175 && screenY >= -170 && screenY <= -70) {
                 paused = false;
+                console.log("test")
             }
         } 
         if (paused == true && !inMainMenu) {
@@ -158,7 +159,6 @@ function keyPressed() {
 }
 function draw() {
     const ts = deltaTime / 1000;
-
     if (inMainMenu) {
 
         push();
