@@ -134,6 +134,11 @@ function tryDrawOffScreenMarker(markerImage, position) {
         image(markerImage, clamped.x, clamped.y, 20, 20);
     }
 }
+function keyPressed() {
+    if (keyCode == 27 && !inMainMenu) {
+        paused = !paused;
+    }
+}
 function draw() {
     const ts = deltaTime / 1000;
 
@@ -174,17 +179,12 @@ function draw() {
             pop();
         }
     } else {
-        if (isLooping)
+        if (isLooping && !paused) {
             update(ts);
-
-        if (!isLooping) {
-            time = time;
-        } else {
             time += ts;
         }
-
         starbackground();
-
+        
         push();
         textFont(inconsolatafont);
         textAlign(CENTER);
@@ -225,6 +225,26 @@ function draw() {
         if (repair !== null)
             tryDrawOffScreenMarker(repairImage, repair.position);
     }
+    if (paused == true) {
+        push();
+        rectMode(CENTER);
+        fill(51, 128);
+        rect(0, 0, width, height);
+        pop();
+
+        push();
+        rectMode(CORNERS);
+        fill(51);
+        rect(200, 350, -200, -350);
+        pop();
+
+        push();
+        tra
+        rectMode(CORNERS);
+        fill(51);
+        rect(-175, -50, 175, 50);
+        pop();
+    }
     push();
     imageMode(CENTER);
     image(blankMoneyImage, 0, height / 2 - 100, 100, 100);
@@ -241,9 +261,6 @@ function update(ts) {
     wealth = wealth || 0;
     turningLeft = keyIsDown(65);
     turningRight = keyIsDown(68);
-    if (keyIsDown(27)) {
-        inMainMenu = true
-    }
 
     if (mouseIsPressed) {
         let screenX = map(mouseX, 0, width, -width / 2, width / 2);
@@ -255,7 +272,6 @@ function update(ts) {
             turningRight = true;
         }
     }
-
     waves(ts);
     for (money of moneys) {
         if (money.position.dist(ship.position) >= 3000) {
