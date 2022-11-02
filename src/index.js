@@ -23,6 +23,10 @@ let time = 0;
 let turningLeft = false;
 let turningRight = false;
 
+let turnLeftKey = { value: 'A'.charCodeAt(0) };
+let turnRightKey = { value: 'D'.charCodeAt(0) };
+let changingKey = null;
+
 function setup() {
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
@@ -33,6 +37,7 @@ function setup() {
     } else {
         wealth = 0;
     }
+    wealth = wealth || 0;
 
     // drawMainMenu();
     canvas.mousePressed(function () {
@@ -47,6 +52,7 @@ function setup() {
             }
         }
         pausedButtons();
+        controllButtons();
     });
 }
 
@@ -137,10 +143,13 @@ function tryDrawOffScreenMarker(markerImage, position) {
     }
 }
 function keyPressed() {
-    if (keyCode == 27 && !inMainMenu && !controllSettingss) {
+    if (keyCode == 27 && !inMainMenu && !controllSettings) {
         paused = !paused;
     } else if (keyCode == 27 && controllSettings == true) {
         controllSettings = false;
+    } else if (changingKey !== null) {
+        changingKey.value = keyCode;
+        changingKey = null;
     }
 }
 function draw() {
@@ -164,14 +173,7 @@ function draw() {
         text("PLAY", 0, 30);
         pop();
 
-        push();
-        textAlign(CENTER);
-        textSize(30);
-        textFont(inconsolatafont);
-        textStyle(BOLD);
-        text("CONTROLS:", width / 2 - 100, 0);
-        text("A and D to turn the ship", width / 2 - 180, 30);
-        pop();
+        
 
         if (time > 0) {
             push();
@@ -228,25 +230,7 @@ function draw() {
         if (repair !== null)
             tryDrawOffScreenMarker(repairImage, repair.position);
     }
-    if (!inMainMenu && !paused) {
-        push();
-        rectMode(CENTER);
-        fill(51);
-        rect(-width / 2 + 20, -height / 2 + 20, 30, 30);
-        pop();
 
-        push();
-        rectMode(CENTER);
-        fill(255);
-        rect(-width / 2 + 27, -height / 2 + 20, 7, 25);
-        pop();
-
-        push();
-        rectMode(CENTER);
-        fill(255);
-        rect(-width / 2 + 13, -height / 2 + 20, 7, 25);
-        pop();
-    }
     pauseMenu();
     controlls();
 
@@ -265,9 +249,8 @@ function draw() {
 
 
 function update(ts) {
-    wealth = wealth || 0;
-    turningLeft = keyIsDown(65);
-    turningRight = keyIsDown(68);
+    turningLeft = keyIsDown(turnLeftKey.value);
+    turningRight = keyIsDown(turnRightKey.value);
 
     if (mouseIsPressed) {
         let screenX = map(mouseX, 0, width, -width / 2, width / 2);

@@ -14,6 +14,7 @@ let moneyImage;
 let blankMoneyImage;
 let repairImage;
 let warningImage;
+let xImage
 
 let stars;
 let mainMenuBackground;
@@ -35,6 +36,7 @@ function preload() {
     moneyImage = loadImage("images/icons/money.png");
     blankMoneyImage = loadImage("images/icons/blankmoney.png");
     repairImage = loadImage("images/icons/repair.png");
+    xImage = loadImage("images/icons/X.png");
 
     missileV1Image = loadImage("images/missiles/missilev1.png");
     missileV2Image = loadImage("images/missiles/missilev2.png");
