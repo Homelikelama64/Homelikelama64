@@ -14,6 +14,7 @@ let moneyImage;
 let blankMoneyImage;
 let repairImage;
 let warningImage;
+
 let stars;
 let mainMenuBackground;
 

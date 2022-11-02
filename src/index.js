@@ -16,6 +16,7 @@ let wealth;
 
 let inMainMenu = true;
 let paused = false;
+let controllSettings = false
 
 let time = 0;
 
@@ -60,7 +61,7 @@ function setupUnits() {
     moneys = [];
     ship = new Ship(
         300,
-        120,
+        130,
         createVector(0, 0),
         random(0, 360),
         4,
@@ -225,8 +226,21 @@ function draw() {
         if (repair !== null)
             tryDrawOffScreenMarker(repairImage, repair.position);
     }
+    if (!inMainMenu && !paused) {
+        push();
+        rectMode(CENTER);
+        fill(51);
+        rect(-width /2 + 20, -height / 2 + 20, 30, 30);
+        pop();
 
+        push();
+        rectMode(CENTER);
+        fill(255)
+        rect(-width / 2 + 25, -height / 2 + 20, 10, 25)
+        pop();
+    }
     pauseMenu();
+    controlls();
 
     push();
     imageMode(CENTER);

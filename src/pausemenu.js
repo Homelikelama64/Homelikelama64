@@ -1,9 +1,9 @@
 function pauseMenu() {
-    if (paused == true) {
+    if (paused && !controllSettings) {
         push();
-        rectMode(CENTER);
-        fill(51, 128);
-        rect(0, 0, width, height);
+        rectMode(CENTER)
+        fill(51, 128)
+        rect(0, 0, width, height)
         pop();
 
         push();
@@ -62,21 +62,28 @@ function pauseMenu() {
 function pausedButtons() {
     let screenX = map(mouseX, 0, width, -width / 2, width / 2);
     let screenY = map(mouseY, 0, height, -height / 2, height / 2);
-    if (paused == true && !inMainMenu) {
+    // play
+    if (paused == true && !inMainMenu && !controllSettings) {
         if (screenX >= -175 && screenX <= 175 && screenY >= -170 && screenY <= -70) {
             paused = false;
         }
     }
-    if (paused == true && !inMainMenu) {
+    // main menu
+    if (paused == true && !inMainMenu && !controllSettings) {
         if (screenX >= -175 && screenX <= 175 && screenY >= -50 && screenY <= 50) {
             inMainMenu = true;
             paused = false;
         }
     }
-    if (paused == true && !inMainMenu) {
+    // settings
+    if (paused == true && !inMainMenu && !controllSettings) {
         if (screenX >= -175 && screenX <= 175 && screenY >= 70 && screenY <= 170) {
-            console.log("not done yet");
-            // TODO:
+            controllSettings = true;
+        }
+    }
+    if (!inMainMenu) {
+        if (screenX >= -width / 2 + 10 && screenX <= -width / 2 + 40 && screenY >= -height / 2 + 10 && screenY <= -height / 2 + 30) {
+            paused = true;
         }
     }
 }
