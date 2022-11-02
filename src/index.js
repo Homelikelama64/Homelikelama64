@@ -16,7 +16,7 @@ let wealth;
 
 let inMainMenu = true;
 let paused = false;
-let controllSettings = false
+let controllSettings = false;
 
 let time = 0;
 
@@ -137,8 +137,10 @@ function tryDrawOffScreenMarker(markerImage, position) {
     }
 }
 function keyPressed() {
-    if (keyCode == 27 && !inMainMenu) {
+    if (keyCode == 27 && !inMainMenu && !controllSettingss) {
         paused = !paused;
+    } else if (keyCode == 27 && controllSettings == true) {
+        controllSettings = false;
     }
 }
 function draw() {
@@ -230,13 +232,19 @@ function draw() {
         push();
         rectMode(CENTER);
         fill(51);
-        rect(-width /2 + 20, -height / 2 + 20, 30, 30);
+        rect(-width / 2 + 20, -height / 2 + 20, 30, 30);
         pop();
 
         push();
         rectMode(CENTER);
-        fill(255)
-        rect(-width / 2 + 25, -height / 2 + 20, 10, 25)
+        fill(255);
+        rect(-width / 2 + 27, -height / 2 + 20, 7, 25);
+        pop();
+
+        push();
+        rectMode(CENTER);
+        fill(255);
+        rect(-width / 2 + 13, -height / 2 + 20, 7, 25);
         pop();
     }
     pauseMenu();
