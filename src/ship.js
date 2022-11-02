@@ -23,8 +23,9 @@ class Ship {
         this.boostImage = boostImage;
         this.damagedImage = damagedImage;
         this.boostDamageImage = boostDamageImage;
-        this.fireDelay = 0.2;
+        this.fireDelay = 0.075;
         this.fireTimer = this.fireDelay;
+        this.shootLeft = true;
     }
 
     isColliding(object) {
@@ -55,27 +56,44 @@ class Ship {
 
         this.fireTimer -= ts;
         while (this.fireTimer <= 0) {
-            this.fireTimer += this.fireDelay;
-            bullets.push(new Bullet(
-                bulletImage,
-                this.position.copy().add(forward.copy().mult(14).rotate(-45)),
-                this.rotation,
-                300,
-                movement,
-                2,
-                false,
-                createVector(5, 10)
-            ));
-            bullets.push(new Bullet(
-                bulletImage,
-                this.position.copy().add(forward.copy().mult(14).rotate(45)),
-                this.rotation,
-                300,
-                movement,
-                2,
-                false,
-                createVector(5, 10)
-            ));
+            let aimingAtMissile = false;
+            for (let missile of missiles) {
+                let shipToMissile = missile.position.copy().sub(this.position);
+                if (Math.abs(forward.angleBetween(shipToMissile)) < 15 && ship.position.dist(missile.position) < 1200) {
+                    aimingAtMissile = true;
+                    break;
+                }
+            }
+            if (aimingAtMissile) {
+                this.fireTimer += this.fireDelay;
+                if (this.shootLeft) {
+                    bullets.push(new Bullet(
+                        bulletImage,
+                        this.position.copy().add(forward.copy().mult(14).rotate(-45)),
+                        this.rotation,
+                        300,
+                        movement,
+                        2,
+                        false,
+                        createVector(5, 10)
+                    ));
+                } else {
+                    bullets.push(new Bullet(
+                        bulletImage,
+                        this.position.copy().add(forward.copy().mult(14).rotate(45)),
+                        this.rotation,
+                        300,
+                        movement,
+                        2,
+                        false,
+                        createVector(5, 10)
+                    ));
+                }
+                this.shootLeft = !this.shootLeft;
+            } else {
+                this.fireTimer = 0;
+                break;
+            }
         }
     }
 
