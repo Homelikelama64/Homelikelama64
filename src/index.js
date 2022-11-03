@@ -353,7 +353,7 @@ function update(ts) {
 
     for (let i = 0; i < moneys.length;) {
         if (ship.isColliding(moneys[i])) {
-            wealth += 3;
+            wealth += moneys.length;
             spawnMoney();
             moneys.splice(i, 1);
             kaching.play();
