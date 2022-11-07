@@ -31,14 +31,7 @@ function pauseMenu() {
         rect(200, 200, -200, -200);
         pop();
 
-
-        push();
-        translate(0, -120);
-        rectMode(CORNERS);
-        fill(51);
-        rect(-175, -50, 175, 50);
-        pop();
-
+        buttonDraw(-175, -170, 175, -70)
         push();
         translate(0, -100);
         textFont(inconsolatafont);
@@ -47,13 +40,7 @@ function pauseMenu() {
         text("RESUME", 0, 0);
         pop();
 
-        push();
-        translate(0, 0);
-        rectMode(CORNERS);
-        fill(51);
-        rect(-175, -50, 175, 50);
-        pop();
-
+        buttonDraw(-175, -50, 175, 50);
         push();
         translate(0, 20);
         textFont(inconsolatafont);
@@ -62,13 +49,7 @@ function pauseMenu() {
         text("MAIN MENU", 0, 0);
         pop();
 
-        push();
-        translate(0, 120);
-        rectMode(CORNERS);
-        fill(51);
-        rect(-175, -50, 175, 50);
-        pop();
-
+        buttonDraw(-175, 70, 175, 170)
         push();
         translate(0, 140);
         textFont(inconsolatafont);
@@ -83,26 +64,26 @@ function pausedButtons() {
     let screenY = map(mouseY, 0, height, -height / 2, height / 2);
     // play
     if (paused && !inMainMenu && !controllSettings) {
-        if (screenX >= -175 && screenX <= 175 && screenY >= -170 && screenY <= -70) {
+        if (buttonClicked(-175, -170, 175, -70)) {
             paused = false;
         }
     }
     // main menu
     if (paused && !inMainMenu && !controllSettings) {
-        if (screenX >= -175 && screenX <= 175 && screenY >= -50 && screenY <= 50) {
+        if (buttonClicked(-175, -50, 175, 50)) {
             inMainMenu = true;
             paused = false;
         }
     }
     // settings
     if (paused == true && !inMainMenu && !controllSettings) {
-        if (screenX >= -175 && screenX <= 175 && screenY >= 70 && screenY <= 170) {
+        if (buttonClicked(-175, 70, 175, 170)) {
             controllSettings = true;
         }
     }
     // pause
     if (!inMainMenu) {
-        if (screenX >= -width / 2 + 10 && screenX <= -width / 2 + 40 && screenY >= -height / 2 + 10 && screenY <= -height / 2 + 30) {
+        if (buttonClicked(-width / 2 + 10, -height / 2 + 10, -width / 2 + 40, -height / 2 + 30)) {
             paused = true;
         }
     }

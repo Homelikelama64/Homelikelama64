@@ -41,10 +41,8 @@ function setup() {
 
     // drawMainMenu();
     canvas.mousePressed(function () {
-        let screenX = map(mouseX, 0, width, -width / 2, width / 2);
-        let screenY = map(mouseY, 0, height, -height / 2, height / 2);
         if (inMainMenu) {
-            if (screenX >= -100 && screenX <= 100 && screenY >= -50 && screenY <= 50) {
+            if (buttonClicked(-100, -50, 100, 50)) {
                 time = 0;
                 resetWaves();
                 setupUnits();
@@ -54,6 +52,22 @@ function setup() {
         pausedButtons();
         controllButtons();
     });
+}
+
+function buttonClicked(posX, posY, minX, minY) {
+    let screenX = map(mouseX, 0, width, -width / 2, width / 2);
+    let screenY = map(mouseY, 0, height, -height / 2, height / 2);
+    if (screenX >= posX && screenX <= minX && screenY >= posY && screenY <= minY) {
+        return true;
+    }
+}
+
+function buttonDraw(posX, posY, minX, minY) {
+    push();
+    rectMode(CORNERS);
+    fill(51);
+    rect(posX, posY, minX, minY);
+    pop();
 }
 
 function clamp(value, minValue, maxValue) {
@@ -155,15 +169,12 @@ function keyPressed() {
 function draw() {
     const ts = deltaTime / 1000;
     if (inMainMenu) {
-
         push();
         background(0);
         imageMode(CENTER);
         let scale = mainMenuBackground.height / height;
         image(mainMenuBackground, 0, 0, mainMenuBackground.width / scale, mainMenuBackground.height / scale);
-        fill(51);
-        rectMode(CORNERS);
-        rect(-100, -50, 100, 50);
+        buttonDraw(-100, -50, 100, 50);
         pop();
 
         push();
@@ -173,7 +184,7 @@ function draw() {
         text("PLAY", 0, 30);
         pop();
 
-        
+
 
         if (time > 0) {
             push();
