@@ -25,6 +25,8 @@ function controlls() {
         // turn right
         buttonDraw(-335, -140, 235, -80);
 
+        buttonDraw(-335, -70, 235, -25);
+
         // turn left
         push();
         translate(0, 50);
@@ -41,6 +43,14 @@ function controlls() {
         textAlign(CORNER);
         textSize(70);
         text(`Turn Right = ${String.fromCharCode(turnRightKey.value)}`, -335, -140);
+        pop();
+
+        push();
+        sfxVolumeSlider.position(width / 2 - 150, height / 2 - 55);
+        textFont(inconsolatafont);
+        textAlign(CORNER)
+        textSize(50)
+        text("SFX VOL", -335, -30)
         pop();
     }
 }

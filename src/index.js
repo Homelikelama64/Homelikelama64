@@ -20,6 +20,9 @@ let controllSettings = false;
 
 let time = 0;
 
+let sfxVolume;
+let sfxVolumeSlider;
+
 let turningLeft = false;
 let turningRight = false;
 
@@ -28,6 +31,11 @@ let turnRightKey = { value: 'D'.charCodeAt(0) };
 let changingKey = null;
 
 function setup() {
+
+    sfxVolumeSlider = createSlider(0, 1, 0.5, 0);
+    sfxVolumeSlider.position(-10000, -10000);
+    sfxVolumeSlider.style('width', '370px');
+
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
 
@@ -161,6 +169,7 @@ function keyPressed() {
         paused = !paused;
     } else if (keyCode == 27 && controllSettings == true) {
         controllSettings = false;
+        sfxVolumeSlider.position(-10000, -10000);
     } else if (changingKey !== null) {
         changingKey.value = keyCode;
         changingKey = null;
@@ -274,6 +283,9 @@ function update(ts) {
         }
     }
     waves(ts);
+
+    sfxVolume = sfxVolumeSlider.value();
+
     for (money of moneys) {
         if (money.position.dist(ship.position) >= 3000) {
             money.position = p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position);
@@ -367,6 +379,9 @@ function update(ts) {
             wealth += moneys.length;
             spawnMoney();
             moneys.splice(i, 1);
+            console.log(typeof sfxVolume);
+            console.log(sfxVolume);
+            kaching.setVolume(sfxVolume);
             kaching.play();
             continue;
         }
