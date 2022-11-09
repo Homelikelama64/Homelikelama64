@@ -71,9 +71,6 @@ function setup() {
     musicVolumeSlider.position(-10000, -10000);
     musicVolumeSlider.style('width', '330px');
 
-    backgroundmusic.setVolume(musicVolume);
-    backgroundmusic.loop()
-
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
 
@@ -207,6 +204,8 @@ function keyPressed() {
         changingKey = null;
     }
 }
+
+let playingSound = false;
 function draw() {
     sfxVolume = sfxVolumeSlider.value();
     musicVolume = musicVolumeSlider.value();
@@ -304,6 +303,11 @@ function draw() {
 
 
 function update(ts) {
+    if (!playingSound) {
+        backgroundmusic.setVolume(musicVolume);
+        backgroundmusic.loop();
+        playingSound = true;
+    }
     turningLeft = keyIsDown(turnLeftKey.value);
     turningRight = keyIsDown(turnRightKey.value);
 
