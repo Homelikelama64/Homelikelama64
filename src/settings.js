@@ -55,8 +55,6 @@ function controlls() {
     }
 }
 function controllButtons() {
-    let screenX = map(mouseX, 0, width, -width / 2, width / 2);
-    let screenY = map(mouseY, 0, height, -height / 2, height / 2);
     // exit settings
     if (!inMainMenu && controllSettings) {
         if (buttonClicked(320, -225, 350, -195)) {

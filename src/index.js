@@ -68,6 +68,7 @@ function buttonClicked(posX, posY, minX, minY) {
     if (screenX >= posX && screenX <= minX && screenY >= posY && screenY <= minY) {
         return true;
     }
+    return false;
 }
 
 function buttonDraw(posX, posY, minX, minY) {
@@ -379,8 +380,6 @@ function update(ts) {
             wealth += moneys.length;
             spawnMoney();
             moneys.splice(i, 1);
-            console.log(typeof sfxVolume);
-            console.log(sfxVolume);
             kaching.setVolume(sfxVolume);
             kaching.play();
             continue;

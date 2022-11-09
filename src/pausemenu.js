@@ -60,8 +60,6 @@ function pauseMenu() {
     }
 }
 function pausedButtons() {
-    let screenX = map(mouseX, 0, width, -width / 2, width / 2);
-    let screenY = map(mouseY, 0, height, -height / 2, height / 2);
     // play
     if (paused && !inMainMenu && !controllSettings) {
         if (buttonClicked(-175, -170, 175, -70)) {

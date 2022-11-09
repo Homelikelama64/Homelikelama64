@@ -14,7 +14,7 @@ let moneyImage;
 let blankMoneyImage;
 let repairImage;
 let warningImage;
-let xImage
+let xImage;
 
 let stars;
 let mainMenuBackground;
@@ -22,6 +22,7 @@ let mainMenuBackground;
 let inconsolatafont;
 
 let kaching;
+let beepSound;
 
 function preload() {
     soundFormats('mp3', 'ogg');
@@ -42,12 +43,13 @@ function preload() {
     missileV2Image = loadImage("images/missiles/missilev2.png");
     missileV3Image = loadImage("images/missiles/missilev3.png");
     missileV3DebImage = loadImage("images/missiles/missilev3deb.png");
-    missileV3Imagebullet = loadImage("images/missiles/missilev3bullet.png")
+    missileV3Imagebullet = loadImage("images/missiles/missilev3bullet.png");
 
     stars = loadImage("images/backgrounds/stars.png");
     mainMenuBackground = loadImage("images/backgrounds/mainmenubackground.png");
 
     inconsolatafont = loadFont("fonts/Inconsolata.otf");
 
-    kaching = loadSound("sounds/Kaching.mp3")
+    kaching = loadSound("sounds/Kaching.mp3");
+    beepSound = loadSound("sounds/beep.mp3");
 }
