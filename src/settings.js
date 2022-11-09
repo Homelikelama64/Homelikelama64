@@ -59,6 +59,7 @@ function controllButtons() {
     if (!inMainMenu && controllSettings) {
         if (buttonClicked(320, -225, 350, -195)) {
             controllSettings = false;
+            sfxVolumeSlider.position(-10000, -10000);
         }
     }
     // turn left

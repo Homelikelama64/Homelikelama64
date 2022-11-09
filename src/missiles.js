@@ -17,8 +17,9 @@ class Missile {
         this.turningSpeed = turningSpeed;
         this.accuracy = accuracy;
         this.predictive = predictive;
-        this.beepdelay = 1;
-        this.beepTimer = this.beepdelay;
+        if (this.image === missileV2Image) {
+            this.beepTimer = 0;
+        }
     }
     isColliding(object) {
         if (object instanceof Missile) {
@@ -54,13 +55,13 @@ class Missile {
             this.rotation += this.turningSpeed * ts;
         }
 
-        if (this.image === missileV2Image) {
-            this.beepdelay = map(Math.abs(angle), 0, 180, 0.1, 1);
+        if (this.beepTimer !== undefined) {
+            let beepdelay = map(Math.abs(angle), 0, 180, 0.1, 1);
             this.beepTimer -= ts;
             while (this.beepTimer <= 0) {
                 beepSound.setVolume(sfxVolume);
                 beepSound.play();
-                this.beepTimer += this.beepdelay;
+                this.beepTimer += beepdelay;
             }
         }
 
