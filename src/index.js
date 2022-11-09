@@ -23,6 +23,9 @@ let time = 0;
 let sfxVolume;
 let sfxVolumeSlider;
 
+let musicVolume;
+let musicVolumeSlider;
+
 let turningLeft = false;
 let turningRight = false;
 
@@ -43,6 +46,12 @@ function setup() {
         sfxVolume = 0.5;
     }
 
+    let loadedMusicVolume = window.localStorage.getItem("MUSICVol");
+    musicVolume = parseFloat(loadedMusicVolume);
+    if (!musicVolume && musicVolume !== 0) {
+        musicVolume = 0.3;
+    }
+
     let loadedTurnLeftKey = window.localStorage.getItem("turnLeftKey");
     turnLeftKey = { value: parseInt(loadedTurnLeftKey) };
     if (!turnLeftKey.value && turnLeftKey.value !== 0) {
@@ -57,6 +66,13 @@ function setup() {
     sfxVolumeSlider = createSlider(0, 1, sfxVolume, 0);
     sfxVolumeSlider.position(-10000, -10000);
     sfxVolumeSlider.style('width', '370px');
+
+    musicVolumeSlider = createSlider(0, 1, musicVolume, 0);
+    musicVolumeSlider.position(-10000, -10000);
+    musicVolumeSlider.style('width', '330px');
+
+    backgroundmusic.setVolume(musicVolume);
+    backgroundmusic.loop()
 
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
@@ -185,6 +201,7 @@ function keyPressed() {
     } else if (keyCode == 27 && controllSettings == true) {
         controllSettings = false;
         sfxVolumeSlider.position(-10000, -10000);
+        musicVolumeSlider.position(-10000, -10000);
     } else if (changingKey !== null) {
         changingKey.value = keyCode;
         changingKey = null;
@@ -192,6 +209,8 @@ function keyPressed() {
 }
 function draw() {
     sfxVolume = sfxVolumeSlider.value();
+    musicVolume = musicVolumeSlider.value();
+    backgroundmusic.setVolume(musicVolume);
     const ts = deltaTime / 1000;
     if (inMainMenu) {
         push();
@@ -355,6 +374,7 @@ function update(ts) {
                 missiles.splice(i, 1);
                 bullets.splice(j, 1);
                 wealth += 1;
+                window.localStorage.setItem("wealth", `${wealth}`);
                 wasCollision = true;
                 break;
             }
@@ -391,6 +411,7 @@ function update(ts) {
     for (let i = 0; i < moneys.length;) {
         if (ship.isColliding(moneys[i])) {
             wealth += moneys.length;
+            window.localStorage.setItem("wealth", `${wealth}`);
             spawnMoney();
             moneys.splice(i, 1);
             kaching.setVolume(sfxVolume);
@@ -402,8 +423,10 @@ function update(ts) {
 }
 
 window.addEventListener("beforeunload", function () {
+    backgroundmusic.loop();
     window.localStorage.setItem("wealth", `${wealth}`);
     window.localStorage.setItem("turnLeftKey", `${turnLeftKey.value}`);
     window.localStorage.setItem("turnRightKey", `${turnRightKey.value}`);
     window.localStorage.setItem("SFXVol", `${sfxVolume}`);
+    window.localStorage.setItem("MUSICVol", `${musicVolume}`);
 });

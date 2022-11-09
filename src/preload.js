@@ -23,6 +23,7 @@ let inconsolatafont;
 
 let kaching;
 let beepSound;
+let backgroundmusic;
 
 function preload() {
     soundFormats('mp3', 'ogg');
@@ -52,4 +53,5 @@ function preload() {
 
     kaching = loadSound("sounds/Kaching.mp3");
     beepSound = loadSound("sounds/beep.mp3");
+    backgroundmusic = loadSound("sounds/spacebackgroundmusic.mp3");
 }

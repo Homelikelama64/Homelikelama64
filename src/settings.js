@@ -25,7 +25,11 @@ function controlls() {
         // turn right
         buttonDraw(-335, -140, 235, -80);
 
+        // sfx 
         buttonDraw(-335, -70, 235, -25);
+
+        // music
+        buttonDraw(-335, -15, 235, 35)
 
         // turn left
         push();
@@ -45,12 +49,22 @@ function controlls() {
         text(`Turn Right = ${String.fromCharCode(turnRightKey.value)}`, -335, -140);
         pop();
 
+        //SFX
         push();
         sfxVolumeSlider.position(width / 2 - 150, height / 2 - 55);
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(50);
         text("SFX VOL", -335, -30);
+        pop();
+
+        //music
+        push();
+        musicVolumeSlider.position(width / 2 - 110, height / 2 + 5);
+        textFont(inconsolatafont);
+        textAlign(CORNER);
+        textSize(50);
+        text("Music VOL", -335, 30);
         pop();
     }
 }
@@ -60,6 +74,7 @@ function controllButtons() {
         if (buttonClicked(320, -225, 350, -195)) {
             controllSettings = false;
             sfxVolumeSlider.position(-10000, -10000);
+            musicVolumeSlider.position(-10000, -10000);
         }
     }
     // turn left
