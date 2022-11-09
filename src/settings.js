@@ -48,9 +48,9 @@ function controlls() {
         push();
         sfxVolumeSlider.position(width / 2 - 150, height / 2 - 55);
         textFont(inconsolatafont);
-        textAlign(CORNER)
-        textSize(50)
-        text("SFX VOL", -335, -30)
+        textAlign(CORNER);
+        textSize(50);
+        text("SFX VOL", -335, -30);
         pop();
     }
 }

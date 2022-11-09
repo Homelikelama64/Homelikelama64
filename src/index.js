@@ -26,26 +26,40 @@ let sfxVolumeSlider;
 let turningLeft = false;
 let turningRight = false;
 
-let turnLeftKey = { value: 'A'.charCodeAt(0) };
-let turnRightKey = { value: 'D'.charCodeAt(0) };
+let turnLeftKey;
+let turnRightKey;
 let changingKey = null;
 
 function setup() {
+    let loadedWealth = window.localStorage.getItem("wealth");
+    wealth = parseInt(loadedWealth);
+    if (!wealth && wealth !== 0) {
+        wealth = 0;
+    }
 
-    sfxVolumeSlider = createSlider(0, 1, 0.5, 0);
+    let loadedSFXVolume = window.localStorage.getItem("SFXVol");
+    sfxVolume = parseFloat(loadedSFXVolume);
+    if (!sfxVolume && sfxVolume !== 0) {
+        sfxVolume = 0.5;
+    }
+
+    let loadedTurnLeftKey = window.localStorage.getItem("turnLeftKey");
+    turnLeftKey = { value: parseInt(loadedTurnLeftKey) };
+    if (!turnLeftKey.value && turnLeftKey.value !== 0) {
+        turnLeftKey.value = 'A'.charCodeAt(0);
+    }
+    let loadedTurnRightKey = window.localStorage.getItem("turnRightKey");
+    turnRightKey = { value: parseInt(loadedTurnRightKey) };
+    if (!turnRightKey.value && turnRightKey.value !== 0) {
+        turnRightKey.value = 'D'.charCodeAt(0);
+    }
+
+    sfxVolumeSlider = createSlider(0, 1, sfxVolume, 0);
     sfxVolumeSlider.position(-10000, -10000);
     sfxVolumeSlider.style('width', '370px');
 
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
-
-    let loadedWealth = window.localStorage.getItem("wealth");
-    if (loadedWealth !== null && loadedWealth !== undefined) {
-        wealth = parseInt(loadedWealth);
-    } else {
-        wealth = 0;
-    }
-    wealth = wealth || 0;
 
     // drawMainMenu();
     canvas.mousePressed(function () {
@@ -177,6 +191,7 @@ function keyPressed() {
     }
 }
 function draw() {
+    sfxVolume = sfxVolumeSlider.value();
     const ts = deltaTime / 1000;
     if (inMainMenu) {
         push();
@@ -285,8 +300,6 @@ function update(ts) {
     }
     waves(ts);
 
-    sfxVolume = sfxVolumeSlider.value();
-
     for (money of moneys) {
         if (money.position.dist(ship.position) >= 3000) {
             money.position = p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position);
@@ -390,4 +403,7 @@ function update(ts) {
 
 window.addEventListener("beforeunload", function () {
     window.localStorage.setItem("wealth", `${wealth}`);
+    window.localStorage.setItem("turnLeftKey", `${turnLeftKey.value}`);
+    window.localStorage.setItem("turnRightKey", `${turnRightKey.value}`);
+    window.localStorage.setItem("SFXVol", `${sfxVolume}`);
 });
