@@ -65,7 +65,7 @@ function setup() {
 
     sfxVolumeSlider = createSlider(0, 1, sfxVolume, 0);
     sfxVolumeSlider.position(-10000, -10000);
-    sfxVolumeSlider.style('width', '370px');
+    sfxVolumeSlider.style('width', '330px');
 
     musicVolumeSlider = createSlider(0, 1, musicVolume, 0);
     musicVolumeSlider.position(-10000, -10000);
@@ -207,10 +207,8 @@ function keyPressed() {
 
 let playingSound = false;
 function draw() {
-    sfxVolume = sfxVolumeSlider.value();
-    musicVolume = musicVolumeSlider.value();
-    backgroundmusic.setVolume(musicVolume);
     const ts = deltaTime / 1000;
+    console.clear();
     if (inMainMenu) {
         push();
         background(0);

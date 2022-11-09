@@ -12,7 +12,7 @@ function controlls() {
         rect(0, 0, 700, 450);
         pop();
 
-        // X image
+        // cancel
         buttonDraw(320, -195, 350, -225);
         push();
         imageMode(CENTER);
@@ -51,7 +51,7 @@ function controlls() {
 
         //SFX
         push();
-        sfxVolumeSlider.position(width / 2 - 150, height / 2 - 55);
+        sfxVolumeSlider.position(width / 2 - 110, height / 2 - 55);
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(50);
@@ -66,25 +66,42 @@ function controlls() {
         textSize(50);
         text("Music VOL", -335, 30);
         pop();
+
+        //apply
+        push();
+        buttonDraw(180, 150, 350, 225);
+        textFont(inconsolatafont);
+        textAlign(CORNER);
+        textSize(65);
+        text("APPLY", 185, 205);
+        pop();
     }
 }
 function controllButtons() {
-    // exit settings
-    if (!inMainMenu && controllSettings) {
+    // cancel
+    if (controllSettings) {
         if (buttonClicked(320, -225, 350, -195)) {
             controllSettings = false;
             sfxVolumeSlider.position(-10000, -10000);
             musicVolumeSlider.position(-10000, -10000);
         }
     }
+    // apply
+    if (controllSettings) {
+        if (buttonClicked(180, 150, 350, 225)) {
+            sfxVolume = sfxVolumeSlider.value();
+            musicVolume = musicVolumeSlider.value();
+            backgroundmusic.setVolume(musicVolume);
+        }
+    }
     // turn left
-    if (!inMainMenu && controllSettings) {
+    if (controllSettings) {
         if (buttonClicked(-335, -210, 235, -150)) {
             changingKey = turnLeftKey;
         }
     }
     // turn right
-    if (!inMainMenu && controllSettings) {
+    if (controllSettings) {
         if (buttonClicked(-335, -140, 235, -80)) {
             changingKey = turnRightKey;
         }
