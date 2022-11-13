@@ -9,27 +9,27 @@ function controlls() {
         push();
         rectMode(CENTER);
         fill(51);
-        rect(0, 0, 700, 450);
+        rect(0, 0, 700, 450, 20);
         pop();
 
         // cancel
-        buttonDraw(320, -195, 350, -225);
+        buttonDraw(310, -185, 345, -220, 10);
         push();
         imageMode(CENTER);
-        image(xImage, 335, -210, 25, 25);
+        image(xImage, 328, -203, 25, 25);
         pop();
 
         // turn left
-        buttonDraw(-335, -210, 235, -150);
+        buttonDraw(-335, -210, 235, -150, 20);
 
         // turn right
-        buttonDraw(-335, -140, 235, -80);
+        buttonDraw(-335, -140, 235, -80, 20);
 
         // sfx 
-        buttonDraw(-335, -70, 235, -25);
+        buttonDraw(-335, -70, 235, -25, 20);
 
         // music
-        buttonDraw(-335, -15, 235, 35)
+        buttonDraw(-335, -15, 235, 35, 20)
 
         // turn left
         push();
@@ -37,7 +37,7 @@ function controlls() {
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(70);
-        text(`Turn Left  = ${String.fromCharCode(turnLeftKey.value)}`, -335, -210);
+        text(`Turn Left  = ${String.fromCharCode(turnLeftKey.value)}`, -330, -210);
         pop();
 
         // turn right
@@ -46,7 +46,7 @@ function controlls() {
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(70);
-        text(`Turn Right = ${String.fromCharCode(turnRightKey.value)}`, -335, -140);
+        text(`Turn Right = ${String.fromCharCode(turnRightKey.value)}`, -330, -140);
         pop();
 
         //SFX
@@ -55,7 +55,7 @@ function controlls() {
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(50);
-        text("SFX VOL", -335, -30);
+        text("SFX VOL", -330, -30);
         pop();
 
         //music
@@ -64,12 +64,12 @@ function controlls() {
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(50);
-        text("Music VOL", -335, 30);
+        text("Music VOL", -330, 30);
         pop();
 
         //apply
         push();
-        buttonDraw(180, 150, 350, 225);
+        buttonDraw(180, 150, 350, 225, 20);
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(65);
@@ -80,7 +80,7 @@ function controlls() {
 function controllButtons() {
     // cancel
     if (controllSettings) {
-        if (buttonClicked(320, -225, 350, -195)) {
+        if (buttonClicked(310, -220, 345, -185)) {
             controllSettings = false;
             sfxVolumeSlider.position(-10000, -10000);
             musicVolumeSlider.position(-10000, -10000);

@@ -28,10 +28,10 @@ function pauseMenu() {
         push();
         rectMode(CORNERS);
         fill(51);
-        rect(200, 200, -200, -200);
+        rect(200, 200, -200, -200, 20);
         pop();
 
-        buttonDraw(-175, -170, 175, -70)
+        buttonDraw(-175, -170, 175, -70, 20)
         push();
         translate(0, -100);
         textFont(inconsolatafont);
@@ -40,7 +40,7 @@ function pauseMenu() {
         text("RESUME", 0, 0);
         pop();
 
-        buttonDraw(-175, -50, 175, 50);
+        buttonDraw(-175, -50, 175, 50, 20);
         push();
         translate(0, 20);
         textFont(inconsolatafont);
@@ -49,7 +49,7 @@ function pauseMenu() {
         text("MAIN MENU", 0, 0);
         pop();
 
-        buttonDraw(-175, 70, 175, 170)
+        buttonDraw(-175, 70, 175, 170, 20)
         push();
         translate(0, 140);
         textFont(inconsolatafont);

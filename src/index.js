@@ -98,11 +98,11 @@ function buttonClicked(posX, posY, minX, minY) {
     return false;
 }
 
-function buttonDraw(posX, posY, minX, minY) {
+function buttonDraw(posX, posY, minX, minY, ROUND) {
     push();
     rectMode(CORNERS);
     fill(51);
-    rect(posX, posY, minX, minY);
+    rect(posX, posY, minX, minY, ROUND);
     pop();
 }
 
