@@ -215,7 +215,7 @@ function draw() {
         imageMode(CENTER);
         let scale = mainMenuBackground.height / height;
         image(mainMenuBackground, 0, 0, mainMenuBackground.width / scale, mainMenuBackground.height / scale);
-        buttonDraw(-100, -50, 100, 50);
+        buttonDraw(-100, -50, 100, 50, 20);
         pop();
 
         push();

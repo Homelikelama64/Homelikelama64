@@ -3,19 +3,19 @@ function pauseMenu() {
         push();
         rectMode(CENTER);
         fill(51);
-        rect(-width / 2 + 20, -height / 2 + 20, 30, 30);
+        rect(-width / 2 + 20, -height / 2 + 20, 30, 30, 10);
         pop();
 
         push();
         rectMode(CENTER);
         fill(255);
-        rect(-width / 2 + 27, -height / 2 + 20, 7, 25);
+        rect(-width / 2 + 27, -height / 2 + 20, 7, 25, 10);
         pop();
 
         push();
         rectMode(CENTER);
         fill(255);
-        rect(-width / 2 + 13, -height / 2 + 20, 7, 25);
+        rect(-width / 2 + 13, -height / 2 + 20, 7, 25, 10);
         pop();
     }
     if (paused && !controllSettings) {
