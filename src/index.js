@@ -17,6 +17,7 @@ let wealth;
 let inMainMenu = true;
 let paused = false;
 let controllSettings = false;
+let debugMode = false;
 
 let time = 0;
 
@@ -203,12 +204,17 @@ function keyPressed() {
         changingKey.value = keyCode;
         changingKey = null;
     }
+    if (keyCode == 220) {
+        debugMode = !debugMode;
+    }
 }
 
 let playingSound = false;
 function draw() {
     const ts = deltaTime / 1000;
-    console.clear();
+    if (!debugMode) {
+        console.clear();
+    }
     if (inMainMenu) {
         push();
         background(0);
@@ -296,6 +302,14 @@ function draw() {
     rotate(-7);
     text(`$${wealth}`, 0, 0);
     pop();
+
+    if (debugMode) {
+        push();
+        fill(255, 0, 0, 30);
+        rectMode(CORNERS);
+        rect(-width, -height, width, height);
+        pop();
+    }
 }
 
 
