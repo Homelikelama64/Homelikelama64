@@ -197,7 +197,7 @@ function tryDrawOffScreenMarker(markerImage, position) {
     }
 }
 function keyPressed() {
-    if (keyCode == 27 && !inMainMenu && !controllSettings) {
+    if (keyCode == 27 && !inMainMenu && !controllSettings && !deathMenu) {
         paused = !paused;
     } else if (keyCode == 27 && controllSettings == true) {
         controllSettings = false;
