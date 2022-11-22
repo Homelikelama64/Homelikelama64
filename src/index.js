@@ -15,6 +15,8 @@ let moneys = [];
 let wealth;
 
 let inMainMenu = true;
+let deathMenu = false;
+let deathsInGame = 0;
 let paused = false;
 let controllSettings = false;
 let debugMode = false;
@@ -87,6 +89,7 @@ function setup() {
         }
         pausedButtons();
         controllButtons();
+        deathMenuClicked();
     });
 }
 
@@ -208,20 +211,59 @@ function keyPressed() {
         debugMode = !debugMode;
     }
 }
-
+function deathMenuClicked() {
+    if (buttonClicked(-175, -100, 175, -15) && deathMenu) {
+        wealth += time / 8;
+        deathsInGame = 0;
+        ship.damaged = false;
+        deathMenu = false;
+        resetWaves();
+        time = 0;
+        bullets = [];
+        missiles = [];
+        isLooping = true;
+        repair = null;
+    }
+    if (buttonClicked(-175, 15, 175, 100) && deathMenu) {
+        inMainMenu = true;
+        deathMenu = false;
+        repair = null;
+        deathsInGame = 0;
+        wealth += time / 8;
+    }
+    if (buttonClicked(-90, -10, 90, 10) && deathMenu && wealth >= 100 * deathsInGame) {
+        ship.damaged = false;
+        deathMenu = false;
+        bullets = [];
+        missiles = [];
+        isLooping = true;
+        repair = null;
+        wealth -= 100 * deathsInGame
+    } else {
+        console.log("not enough money");
+    }
+}
 let playingSound = false;
 function draw() {
     const ts = deltaTime / 1000;
     if (!debugMode) {
         console.clear();
     }
-    if (inMainMenu) {
+    if (inMainMenu && controllSettings) {
         push();
         background(0);
         imageMode(CENTER);
         let scale = mainMenuBackground.height / height;
         image(mainMenuBackground, 0, 0, mainMenuBackground.width / scale, mainMenuBackground.height / scale);
-        buttonDraw(-100, -50, 100, 50, 20);
+        pop();
+    } else if (inMainMenu && !controllSettings) {
+
+        push();
+        background(0);
+        imageMode(CENTER);
+        let scale = mainMenuBackground.height / height;
+        image(mainMenuBackground, 0, 0, mainMenuBackground.width / scale, mainMenuBackground.height / scale);
+        buttonDraw(-100, -50, 100, 50, 15);
         pop();
 
         push();
@@ -231,7 +273,13 @@ function draw() {
         text("PLAY", 0, 30);
         pop();
 
-
+        push();
+        buttonDraw(-75, 60, 75, 110, 10);
+        textAlign(CENTER);
+        textSize(30);
+        textFont(inconsolatafont);
+        text("SETTINGS", 0, 95);
+        pop();
 
         if (time > 0) {
             push();
@@ -300,8 +348,44 @@ function draw() {
     textAlign(CENTER);
     translate(0, height / 2 - 85);
     rotate(-7);
-    text(`$${wealth}`, 0, 0);
+    text(`$${wealth.toFixed(0)}`, 0, 0);
     pop();
+
+    if (deathMenu) {
+        isLooping = false;
+        push();
+        rectMode(CENTER);
+        fill(150, 51, 51, 100);
+        rect(0, 0, width, height);
+        pop();
+
+        push();
+        buttonDraw(-175, -100, 175, -15, 20);
+        textFont(inconsolatafont);
+        textAlign(CENTER);
+        textSize(65);
+        text("RETRY", 0, -35);
+        pop();
+
+        push();
+        buttonDraw(-175, 15, 175, 100, 20);
+        textFont(inconsolatafont);
+        textAlign(CENTER);
+        textSize(65);
+        text("MENU", 0, 75);
+        pop();
+
+        push();
+        buttonDraw(-90, -10, 90, 10, 5);
+        textFont(inconsolatafont);
+        textAlign(CENTER);
+        textSize(25);
+        text("RESPAWN", -45, 7);
+        text(`${deathsInGame * 100}`, 50, 7);
+        imageMode(CENTER);
+        image(moneyImage, 15, 0, 25, 25);
+        pop();
+    }
 
     if (debugMode) {
         push();
@@ -400,7 +484,8 @@ function update(ts) {
         }
         if (ship.isColliding(missiles[i])) {
             if (ship.damaged) {
-                inMainMenu = true;
+                deathMenu = true;
+                deathsInGame += 1;
                 return;
             } else {
                 ship.damaged = true;

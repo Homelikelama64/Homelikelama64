@@ -1,5 +1,5 @@
 function pauseMenu() {
-    if (!inMainMenu && !paused) {
+    if (!inMainMenu && !paused && !deathMenu) {
         push();
         rectMode(CENTER);
         fill(51);
@@ -71,6 +71,7 @@ function pausedButtons() {
         if (buttonClicked(-175, -50, 175, 50)) {
             inMainMenu = true;
             paused = false;
+            wealth += time / 8
         }
     }
     // settings
@@ -80,7 +81,7 @@ function pausedButtons() {
         }
     }
     // pause
-    if (!inMainMenu) {
+    if (!inMainMenu && !paused && !deathMenu) {
         if (buttonClicked(-width / 2 + 10, -height / 2 + 10, -width / 2 + 40, -height / 2 + 30)) {
             paused = true;
         }

@@ -106,4 +106,9 @@ function controllButtons() {
             changingKey = turnRightKey;
         }
     }
+    if (!controllSettings && inMainMenu) {
+        if (buttonClicked(-75, 60, 75, 110)) {
+            controllSettings = true;
+        }
+    }
 }
