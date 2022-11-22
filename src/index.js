@@ -76,7 +76,7 @@ function setup() {
 
     let canvas = createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
-
+    clickSound.setVolume(sfxVolume * 3);
     // drawMainMenu();
     canvas.mousePressed(function () {
         if (inMainMenu) {
@@ -85,6 +85,8 @@ function setup() {
                 resetWaves();
                 setupUnits();
                 inMainMenu = false;
+                clickSound.setVolume(sfxVolume);
+                clickSound.play();
             }
         }
         pausedButtons();
@@ -223,6 +225,7 @@ function deathMenuClicked() {
         missiles = [];
         isLooping = true;
         repair = null;
+        clickSound.play();
     }
     if (buttonClicked(-175, 15, 175, 100) && deathMenu) {
         inMainMenu = true;
@@ -230,6 +233,7 @@ function deathMenuClicked() {
         repair = null;
         deathsInGame = 0;
         wealth += time / 8;
+        clickSound.play();
     }
     if (buttonClicked(-90, -10, 90, 10) && deathMenu && wealth >= 100 * deathsInGame) {
         ship.damaged = false;
@@ -239,6 +243,7 @@ function deathMenuClicked() {
         isLooping = true;
         repair = null;
         wealth -= 100 * deathsInGame
+        clickSound.play();
     } else {
         console.log("not enough money");
     }

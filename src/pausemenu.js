@@ -64,6 +64,8 @@ function pausedButtons() {
     if (paused && !inMainMenu && !controllSettings) {
         if (buttonClicked(-175, -170, 175, -70)) {
             paused = false;
+            clickSound.setVolume(sfxVolume);
+            clickSound.play();
         }
     }
     // main menu
@@ -72,18 +74,21 @@ function pausedButtons() {
             inMainMenu = true;
             paused = false;
             wealth += time / 8
+            clickSound.play();
         }
     }
     // settings
     if (paused == true && !inMainMenu && !controllSettings) {
         if (buttonClicked(-175, 70, 175, 170)) {
             controllSettings = true;
+            clickSound.play();
         }
     }
     // pause
     if (!inMainMenu && !paused && !deathMenu) {
         if (buttonClicked(-width / 2 + 10, -height / 2 + 10, -width / 2 + 40, -height / 2 + 30)) {
             paused = true;
+            clickSound.play();
         }
     }
     

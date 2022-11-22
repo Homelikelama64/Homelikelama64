@@ -84,6 +84,7 @@ function controllButtons() {
             controllSettings = false;
             sfxVolumeSlider.position(-10000, -10000);
             musicVolumeSlider.position(-10000, -10000);
+            clickSound.play();
         }
     }
     // apply
@@ -92,23 +93,28 @@ function controllButtons() {
             sfxVolume = sfxVolumeSlider.value();
             musicVolume = musicVolumeSlider.value();
             backgroundmusic.setVolume(musicVolume);
+            clickSound.setVolume(sfxVolume * 2);
+            clickSound.play();
         }
     }
     // turn left
     if (controllSettings) {
         if (buttonClicked(-335, -210, 235, -150)) {
             changingKey = turnLeftKey;
+            clickSound.play();
         }
     }
     // turn right
     if (controllSettings) {
         if (buttonClicked(-335, -140, 235, -80)) {
             changingKey = turnRightKey;
+            clickSound.play();
         }
     }
     if (!controllSettings && inMainMenu) {
         if (buttonClicked(-75, 60, 75, 110)) {
             controllSettings = true;
+            clickSound.play();
         }
     }
 }
