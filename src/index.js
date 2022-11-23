@@ -79,13 +79,12 @@ function setup() {
     clickSound.setVolume(sfxVolume * 3);
     // drawMainMenu();
     canvas.mousePressed(function () {
-        if (inMainMenu) {
+        if (inMainMenu && !controllSettings) {
             if (buttonClicked(-100, -50, 100, 50)) {
                 time = 0;
                 resetWaves();
                 setupUnits();
                 inMainMenu = false;
-                clickSound.setVolume(sfxVolume);
                 clickSound.play();
             }
         }
@@ -244,7 +243,7 @@ function deathMenuClicked() {
         repair = null;
         wealth -= 100 * deathsInGame
         clickSound.play();
-    } else {
+    } else if (buttonClicked(-90, -10, 90, 10) && deathMenu && wealth <= 100 * deathsInGame){
         console.log("not enough money");
     }
 }
@@ -262,7 +261,6 @@ function draw() {
         image(mainMenuBackground, 0, 0, mainMenuBackground.width / scale, mainMenuBackground.height / scale);
         pop();
     } else if (inMainMenu && !controllSettings) {
-
         push();
         background(0);
         imageMode(CENTER);

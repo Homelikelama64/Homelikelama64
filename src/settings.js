@@ -1,5 +1,5 @@
 function controlls() {
-    if (controllSettings == true) {
+    if (controllSettings) {
         push();
         rectMode(CENTER);
         fill(51, 192);
@@ -75,6 +75,23 @@ function controlls() {
         textSize(65);
         text("APPLY", 185, 205);
         pop();
+        if (changingKey) {
+            buttonDraw(-85, 40, 85, 210 ,20)
+            push();
+            textFont(inconsolatafont);
+            textAlign(CENTER);
+            textSize(30);
+            text(
+`
+PRESS ANY 
+KEY TO SET 
+AS 
+KEYBIND
+`,
+ 0,
+ 40)
+            pop();
+        }
     }
 }
 function controllButtons() {
