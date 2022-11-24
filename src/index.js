@@ -104,10 +104,19 @@ function buttonClicked(posX, posY, minX, minY) {
 }
 
 function buttonDraw(posX, posY, minX, minY, ROUND) {
+    let screenX = map(mouseX, 0, width, -width / 2, width / 2);
+    let screenY = map(mouseY, 0, height, -height / 2, height / 2);
     push();
     rectMode(CORNERS);
-    fill(51);
+    fill(51)
     rect(posX, posY, minX, minY, ROUND);
+    pop();
+    push();
+    if (screenX >= posX && screenX <= minX && screenY >= posY && screenY <= minY) {
+        rectMode(CORNERS)
+        fill(0, 0, 255, 20);
+        rect(posX, posY, minX, minY, ROUND);
+    }
     pop();
 }
 

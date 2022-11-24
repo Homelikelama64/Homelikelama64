@@ -29,7 +29,7 @@ function controlls() {
         buttonDraw(-335, -70, 235, -25, 20);
 
         // music
-        buttonDraw(-335, -15, 235, 35, 20)
+        buttonDraw(-335, -15, 235, 35, 20);
 
         // turn left
         push();
@@ -73,23 +73,37 @@ function controlls() {
         textFont(inconsolatafont);
         textAlign(CORNER);
         textSize(65);
+        function applyButton() {
+            if (sfxVolume !== sfxVolumeSlider.value()) {
+                return true;
+            } else if (musicVolume !== musicVolumeSlider.value()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (applyButton()) {
+            fill(255, 255, 255, 255);
+        } else {
+            fill(255, 255, 255, 128);
+        }
         text("APPLY", 185, 205);
         pop();
         if (changingKey) {
-            buttonDraw(-85, 40, 85, 210 ,20)
+            buttonDraw(-85, 40, 85, 210, 20);
             push();
             textFont(inconsolatafont);
             textAlign(CENTER);
             textSize(30);
             text(
-`
+                `
 PRESS ANY 
 KEY TO SET 
 AS 
 KEYBIND
 `,
- 0,
- 40)
+                0,
+                40);
             pop();
         }
     }
@@ -106,7 +120,7 @@ function controllButtons() {
     }
     // apply
     if (controllSettings) {
-        if (buttonClicked(180, 150, 350, 225)) {
+        if (buttonClicked(180, 150, 350, 225) && applyButton) {
             sfxVolume = sfxVolumeSlider.value();
             musicVolume = musicVolumeSlider.value();
             backgroundmusic.setVolume(musicVolume);

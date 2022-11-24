@@ -13,6 +13,8 @@ let missileV3Imagebullet;
 let moneyImage;
 let blankMoneyImage;
 let repairImage;
+let shieldIconImage;
+let shieldImage;
 let warningImage;
 let xImage;
 
@@ -39,6 +41,8 @@ function preload() {
     moneyImage = loadImage("images/icons/money.png");
     blankMoneyImage = loadImage("images/icons/blankmoney.png");
     repairImage = loadImage("images/icons/repair.png");
+    shield = loadImage("images/ships/spaceshipshield.png");
+    shieldIconImage = loadImage("images/icons/shield.png");
     xImage = loadImage("images/icons/X.png");
 
     missileV1Image = loadImage("images/missiles/missilev1.png");
