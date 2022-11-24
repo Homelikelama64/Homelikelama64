@@ -41,7 +41,7 @@ function preload() {
     moneyImage = loadImage("images/icons/money.png");
     blankMoneyImage = loadImage("images/icons/blankmoney.png");
     repairImage = loadImage("images/icons/repair.png");
-    shield = loadImage("images/ships/spaceshipshield.png");
+    shieldImage = loadImage("images/ships/spaceshipshield.png");
     shieldIconImage = loadImage("images/icons/shield.png");
     xImage = loadImage("images/icons/X.png");
 

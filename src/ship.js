@@ -37,6 +37,8 @@ class Ship {
             return this.position.dist(object.position) < (object.size / 2 + 50 / 2);
         } else if (object instanceof RepairKit) {
             return this.position.dist(object.position) < 40;
+        } else if (object instanceof SheildCollectable) {
+            return this.position.dist(object.position) < 40;
         } else if (object instanceof Money) {
             return this.position.dist(object.position) < 40;
         } else if (object instanceof Bullet) {
@@ -112,7 +114,7 @@ class Ship {
             image(this.image, 0, 0, 50, 50);
         }
         if (this.shieldToggle) {
-            image(shieldImage, 0, 0, 50, 50);
+            image(shieldImage, 0, 0, 55, 55);
         }
         pop();
     }

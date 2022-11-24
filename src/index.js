@@ -10,6 +10,9 @@ let bullets = [];
 /** @type {RepairKit | null} */
 let repair = null;
 
+/** @type {SheildCollectable | null} */
+let shieldCollect = null
+
 /** @type {Money[]} */
 let moneys = [];
 let wealth;
@@ -141,12 +144,13 @@ function setupUnits() {
         shipBoostImage,
         shipDamagedImage,
         shipBoostDamageImage,
-        true,
+        false,
         shieldImage
     );
     spawnMoney();
     spawnMoney();
     spawnMoney();
+    spawnShield();
 }
 
 function spawnMissileV1() {
@@ -190,6 +194,13 @@ function spawnMoney() {
         moneyImage,
         p5.Vector.random2D().setMag(random(1000, 2000)).add(ship.position)
     ));
+}
+function spawnShield() {
+    shieldCollect = new SheildCollectable(
+        shieldIconImage,
+        p5.Vector.random2D()
+            .setMag(random(4000, 5500))
+            .add(ship.position));
 }
 
 
@@ -235,6 +246,7 @@ function deathMenuClicked() {
         missiles = [];
         isLooping = true;
         repair = null;
+        spawnShield();
         clickSound.play();
     }
     if (buttonClicked(-175, 15, 175, 100) && deathMenu) {
@@ -252,6 +264,7 @@ function deathMenuClicked() {
         missiles = [];
         isLooping = true;
         repair = null;
+        spawnShield();
         wealth -= 100 * deathsInGame
         clickSound.play();
     } else if (buttonClicked(-90, -10, 90, 10) && deathMenu && wealth <= 100 * deathsInGame){
@@ -334,6 +347,11 @@ function draw() {
             if (repair !== null) {
                 repair.draw();
             }
+
+            if (shieldCollect !== null) {
+                shieldCollect.draw();
+            }
+
             for (let money of moneys) {
                 money.draw();
             }
@@ -347,8 +365,12 @@ function draw() {
             tryDrawOffScreenMarker(moneyImage, money.position);
         }
 
-        if (repair !== null)
+        if (repair !== null) {
             tryDrawOffScreenMarker(repairImage, repair.position);
+        }
+        if (shieldCollect !== null) {
+            tryDrawOffScreenMarker(shieldIconImage, shieldCollect.position);
+        }
     }
 
     pauseMenu();
@@ -446,10 +468,10 @@ function update(ts) {
             continue;
         }
         if (ship.isColliding(bullets[i])) {
-            if (ship.damaged) {
+            if (ship.damaged && !ship.shieldToggle) {
                 inMainMenu = true;
                 return;
-            } else {
+            } else if (!ship.shieldToggle){
                 ship.damaged = true;
                 repair = new RepairKit(
                     repairImage,
@@ -457,6 +479,8 @@ function update(ts) {
                         .setMag(random(2500, 3500))
                         .add(ship.position)
                 );
+            }else if (ship.shieldToggle){
+                ship.shieldToggle = false
             }
             bullets.splice(i, 1);
             continue;
@@ -497,11 +521,11 @@ function update(ts) {
             continue;
         }
         if (ship.isColliding(missiles[i])) {
-            if (ship.damaged) {
+            if (ship.damaged && !ship.shieldToggle) {
                 deathMenu = true;
                 deathsInGame += 1;
                 return;
-            } else {
+            } else if (!ship.shieldToggle){
                 ship.damaged = true;
                 repair = new RepairKit(
                     repairImage,
@@ -509,6 +533,9 @@ function update(ts) {
                         .setMag(random(2500, 5000))
                         .add(ship.position)
                 );
+            } else if (ship.shieldToggle) {
+                ship.shieldToggle = false
+                spawnShield();
             }
             missiles.splice(i, 1);
             continue;
@@ -520,6 +547,13 @@ function update(ts) {
         if (ship.isColliding(repair)) {
             ship.damaged = false;
             repair = null;
+        }
+    }
+
+    if (shieldCollect !== null) {
+        if (ship.isColliding(shieldCollect)) {
+            ship.shieldToggle = true
+            shieldCollect = null;
         }
     }
 
