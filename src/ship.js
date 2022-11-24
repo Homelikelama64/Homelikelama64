@@ -10,7 +10,9 @@ class Ship {
         image,
         boostImage,
         damagedImage,
-        boostDamageImage
+        boostDamageImage,
+        shieldToggle,
+        shipShieldImage
     ) {
         this.speed = speed;
         this.turningSpeed = turningSpeed;
@@ -26,6 +28,8 @@ class Ship {
         this.fireDelay = 0.075;
         this.fireTimer = this.fireDelay;
         this.shootLeft = true;
+        this.shieldToggle = shieldToggle;
+        this.shipShieldImage = shipShieldImage;
     }
 
     isColliding(object) {
@@ -106,6 +110,9 @@ class Ship {
             image(this.damagedImage, 0, 0, 50, 50);
         } else {
             image(this.image, 0, 0, 50, 50);
+        }
+        if (this.shieldToggle) {
+            image(shieldImage, 0, 0, 50, 50);
         }
         pop();
     }

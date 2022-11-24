@@ -140,7 +140,9 @@ function setupUnits() {
         shipImage,
         shipBoostImage,
         shipDamagedImage,
-        shipBoostDamageImage
+        shipBoostDamageImage,
+        true,
+        shieldImage
     );
     spawnMoney();
     spawnMoney();
