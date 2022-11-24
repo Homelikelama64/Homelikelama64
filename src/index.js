@@ -88,6 +88,7 @@ function setup() {
                 resetWaves();
                 setupUnits();
                 inMainMenu = false;
+                isLooping = true
                 clickSound.play();
             }
         }
@@ -244,15 +245,17 @@ function deathMenuClicked() {
         time = 0;
         bullets = [];
         missiles = [];
+        moneys = [];
         isLooping = true;
         repair = null;
-        spawnShield();
         clickSound.play();
+        setupUnits();
     }
     if (buttonClicked(-175, 15, 175, 100) && deathMenu) {
         inMainMenu = true;
         deathMenu = false;
         repair = null;
+        moneys = [];
         deathsInGame = 0;
         wealth += time / 8;
         clickSound.play();
