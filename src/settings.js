@@ -120,7 +120,7 @@ function controllButtons() {
     }
     // apply
     if (controllSettings) {
-        if (buttonClicked(180, 150, 350, 225) && applyButton) {
+        if (buttonClicked(180, 150, 350, 225) && applyButton( )) {
             sfxVolume = sfxVolumeSlider.value();
             musicVolume = musicVolumeSlider.value();
             backgroundmusic.setVolume(musicVolume);
